@@ -107,13 +107,11 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   top: 1.2rem;
   left: 1.4rem;
   z-index: 10;
-  isolation: isolate;
 }
 .hero-logo {
   height: 140px;
   width: auto;
   object-fit: contain;
-  mix-blend-mode: multiply;
   display: block;
 }
 
