@@ -1,66 +1,32 @@
 [
   {
     "id": 1,
-    "nome": "Flor de Chenille Avulsa",
-    "descricao": "Flor artesanal feita à mão com haste de chenille. Perfeita para decoração, presentes e arranjos personalizados.",
-    "preco": 25.00,
-    "foto": "img/produtos/flor-avulsa.jpg",
+    "nome": "Rosa",
+    "descricao": "Rosa artesanal feita à mão com haste de chenille. Acompanha embalagem exclusiva — perfeita para presentear.",
+    "preco": 18.00,
+    "foto": "https://i.imgur.com/qFFH7qL.jpeg",
     "variacoes": {
-      "Cor": ["Rosa", "Branco", "Lilás", "Vermelho", "Amarelo", "Laranja"]
+      "Cor": ["Vermelha", "Branca"]
     },
     "destaque": true
   },
   {
     "id": 2,
-    "nome": "Buquê Pequeno",
-    "descricao": "Buquê com 5 flores artesanais de chenille, ideal para presentear ou decorar ambientes menores.",
-    "preco": 89.90,
-    "foto": "img/produtos/buque-pequeno.jpg",
+    "nome": "Lírio",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille. Acompanha embalagem exclusiva — delicado e duradouro.",
+    "preco": 18.00,
+    "foto": "https://i.imgur.com/9sY9UOe.jpeg",
     "variacoes": {
-      "Cor": ["Rosa e Branco", "Tons de Lilás", "Vermelho e Rosa", "Colorido"]
+      "Cor": ["Rosa e Branco", "Branco", "Azul", "Vermelho"]
     },
     "destaque": true
   },
   {
     "id": 3,
-    "nome": "Buquê Grande",
-    "descricao": "Buquê completo com 12 flores artesanais de chenille. Elegante e durável — não murcha, não perde a beleza.",
-    "preco": 189.90,
-    "foto": "img/produtos/buque-grande.jpg",
-    "variacoes": {
-      "Cor": ["Rosa e Branco", "Tons de Lilás", "Vermelho e Rosa", "Colorido", "Tons de Bege"]
-    },
-    "destaque": false
-  },
-  {
-    "id": 4,
-    "nome": "Arranjo de Mesa",
-    "descricao": "Arranjo decorativo com flores de chenille em vasinho. Presente delicado para qualquer ocasião.",
-    "preco": 149.90,
-    "foto": "img/produtos/arranjo-mesa.jpg",
-    "variacoes": {
-      "Tamanho": ["Pequeno (10cm)", "Médio (18cm)", "Grande (25cm)"],
-      "Cor": ["Rosa e Branco", "Tons Neutros", "Colorido"]
-    },
-    "destaque": true
-  },
-  {
-    "id": 5,
-    "nome": "Tiara Floral",
-    "descricao": "Tiara artesanal com flores de chenille. Delicada, leve e perfeita para festas, ensaios e uso do dia a dia.",
-    "preco": 65.00,
-    "foto": "img/produtos/tiara.jpg",
-    "variacoes": {
-      "Cor": ["Rosa", "Branco", "Lilás", "Misto Rosa e Branco"]
-    },
-    "destaque": false
-  },
-  {
-    "id": 6,
     "nome": "Encomenda Personalizada",
-    "descricao": "Crie o arranjo dos seus sonhos! Escolha cores, tamanho e estilo. Feito exclusivamente para você.",
+    "descricao": "Crie a flor dos seus sonhos! Escolha tipo, cor e estilo. Feita exclusivamente para você com muito carinho.",
     "preco": 0,
-    "foto": "img/produtos/personalizado.jpg",
+    "foto": "https://i.imgur.com/A4LIbsV.jpeg",
     "variacoes": {},
     "destaque": true,
     "personalizado": true
