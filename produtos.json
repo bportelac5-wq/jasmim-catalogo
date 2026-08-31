@@ -4,7 +4,7 @@
     "nome": "Rosa",
     "descricao": "Rosa artesanal feita à mão com haste de chenille. Acompanha embalagem exclusiva — perfeita para presentear.",
     "preco": 18.00,
-    "foto": "https://i.imgur.com/qFFH7qL.jpeg",
+    "foto": "https://i.imgur.com/Ht9pXlR.jpeg",
     "variacoes": {
       "Cor": ["Vermelha", "Branca"]
     },
@@ -12,17 +12,42 @@
   },
   {
     "id": 2,
-    "nome": "Lírio",
-    "descricao": "Lírio artesanal feito à mão com haste de chenille. Acompanha embalagem exclusiva — delicado e duradouro.",
+    "nome": "Lírio Rosa e Branco",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille nas cores rosa e branco. Acompanha embalagem exclusiva.",
     "preco": 18.00,
-    "foto": "https://i.imgur.com/9sY9UOe.jpeg",
-    "variacoes": {
-      "Cor": ["Rosa e Branco", "Branco", "Azul", "Vermelho"]
-    },
+    "foto": "https://i.imgur.com/HPRbm6D.jpeg",
+    "variacoes": {},
     "destaque": true
   },
   {
     "id": 3,
+    "nome": "Lírio Branco",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille na cor branca. Delicado e elegante. Acompanha embalagem.",
+    "preco": 18.00,
+    "foto": "https://i.imgur.com/js08mPe.jpeg",
+    "variacoes": {},
+    "destaque": true
+  },
+  {
+    "id": 4,
+    "nome": "Lírio Azul",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille na cor azul. Único e especial. Acompanha embalagem.",
+    "preco": 18.00,
+    "foto": "https://i.imgur.com/sLgNMdD.jpeg",
+    "variacoes": {},
+    "destaque": true
+  },
+  {
+    "id": 5,
+    "nome": "Lírio Vermelho",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille na cor vermelha. Vibrante e marcante. Acompanha embalagem.",
+    "preco": 18.00,
+    "foto": "https://i.imgur.com/qFFH7qL.jpeg",
+    "variacoes": {},
+    "destaque": true
+  },
+  {
+    "id": 6,
     "nome": "Encomenda Personalizada",
     "descricao": "Crie a flor dos seus sonhos! Escolha tipo, cor e estilo. Feita exclusivamente para você com muito carinho.",
     "preco": 0,
