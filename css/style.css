@@ -466,15 +466,21 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 .rodape-whats:hover { color: var(--vinho); border-color: var(--vinho); }
 
-.rodape-insta {
-  font-size: .78rem;
-  letter-spacing: .1em;
-  color: var(--rosa-medio);
-  border-bottom: 1px solid var(--rosa-petala);
-  padding-bottom: 2px;
-  transition: color var(--trans), border-color var(--trans);
+.rodape-social {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: .6rem;
 }
-.rodape-insta:hover { color: var(--vinho); border-color: var(--vinho); }
+.rodape-social-btn {
+  color: var(--rosa-medio);
+  transition: color var(--trans), transform var(--trans);
+  display: flex;
+  align-items: center;
+}
+.rodape-social-btn:hover {
+  color: var(--vinho);
+  transform: translateY(-2px);
+}
 
 /* ─── RESPONSIVO ─────────────────────────────────────────────────────── */
 @media (max-width: 400px) {
