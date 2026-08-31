@@ -101,6 +101,19 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   color: var(--branco);
 }
 
+/* Logo canto superior esquerdo */
+.hero-logo-wrap {
+  position: absolute;
+  top: 1.4rem;
+  left: 1.6rem;
+  z-index: 3;
+}
+.hero-logo {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+}
+
 /* Flores decorativas flutuantes */
 .hero-flor {
   position: absolute;
