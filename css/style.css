@@ -106,14 +106,13 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   position: absolute;
   top: 1.2rem;
   left: 1.4rem;
-  z-index: 3;
+  z-index: 10;
 }
 .hero-logo {
-  height: 110px;
+  height: 140px;
   width: auto;
   object-fit: contain;
   mix-blend-mode: multiply;
-  background: transparent;
 }
 
 /* Flores decorativas flutuantes */
@@ -125,6 +124,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   pointer-events: none;
   user-select: none;
   line-height: 1;
+  z-index: 1;
 }
 .hero-flor--1 { top: 6%; left: 4%;  transform: rotate(-20deg); }
 .hero-flor--2 { top: 10%; right: 5%; transform: rotate(15deg);  font-size: clamp(3rem, 9vw, 7rem); }
