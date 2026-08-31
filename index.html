@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jasmim Flores Artesanais — Catálogo</title>
+  <meta name="description" content="Flores artesanais feitas à mão com haste de chenille. Buquês, arranjos e peças únicas sob encomenda." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-flor hero-flor--1" aria-hidden="true">✿</div>
+    <div class="hero-flor hero-flor--2" aria-hidden="true">❀</div>
+    <div class="hero-flor hero-flor--3" aria-hidden="true">✾</div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">flores artesanais · feitas à mão</p>
+      <h1 class="hero-titulo">Jasmim</h1>
+      <p class="hero-sub">Cada flor nasce de fio e afeto.<br>Nenhuma murcha, nenhuma igual à outra.</p>
+      <a href="#catalogo" class="btn-ver">ver catálogo</a>
+    </div>
+  </header>
+
+  <!-- FILTRO -->
+  <nav class="filtro" id="catalogo" aria-label="Filtrar produtos">
+    <button class="filtro-btn ativo" data-filtro="todos">todos</button>
+    <button class="filtro-btn" data-filtro="destaque">destaques</button>
+    <button class="filtro-btn" data-filtro="personalizado">encomenda</button>
+  </nav>
+
+  <!-- GRADE DE PRODUTOS -->
+  <main class="grade" id="grade-produtos" aria-live="polite">
+    <!-- Produtos injetados via JS -->
+  </main>
+
+  <!-- MODAL DE PRODUTO -->
+  <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-nome">
+    <div class="modal-box">
+      <button class="modal-fechar" id="modal-fechar" aria-label="Fechar">✕</button>
+      <div class="modal-foto-wrap">
+        <img class="modal-foto" id="modal-foto" src="" alt="" />
+      </div>
+      <div class="modal-info">
+        <h2 class="modal-nome" id="modal-nome"></h2>
+        <p class="modal-desc" id="modal-desc"></p>
+        <p class="modal-preco" id="modal-preco"></p>
+
+        <!-- Variações dinâmicas -->
+        <div class="modal-variacoes" id="modal-variacoes"></div>
+
+        <a class="btn-whats" id="modal-whats" href="#" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.116.549 4.103 1.508 5.832L.057 23.428a.5.5 0 00.609.61l5.701-1.497A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.887 9.887 0 01-5.044-1.381l-.361-.214-3.737.981.998-3.648-.235-.374A9.861 9.861 0 012.114 12C2.114 6.54 6.54 2.114 12 2.114S21.886 6.54 21.886 12 17.46 21.886 12 21.886z"/>
+          </svg>
+          pedir pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape">
+    <div class="rodape-flor" aria-hidden="true">✿ ❀ ✾</div>
+    <p class="rodape-nome">Jasmim Flores Artesanais</p>
+    <p class="rodape-frase">feitas à mão, pensadas com carinho</p>
+    <a class="rodape-whats" href="https://wa.me/5519992006605" target="_blank" rel="noopener">fale pelo WhatsApp</a>
+  </footer>
+
+  <script src="js/catalogo.js"></script>
+</body>
+</html>
