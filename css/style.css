@@ -126,7 +126,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   line-height: 1;
   z-index: 1;
 }
-.hero-flor--1 { top: 6%; left: 4%;  transform: rotate(-20deg); }
+.hero-flor--1 { top: 6%; left: 18%;  transform: rotate(-20deg); }
 .hero-flor--2 { top: 10%; right: 5%; transform: rotate(15deg);  font-size: clamp(3rem, 9vw, 7rem); }
 .hero-flor--3 { bottom: 8%; right: 8%; transform: rotate(-10deg); }
 
