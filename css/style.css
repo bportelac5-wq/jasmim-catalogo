@@ -104,14 +104,16 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* Logo canto superior esquerdo */
 .hero-logo-wrap {
   position: absolute;
-  top: 1.4rem;
-  left: 1.6rem;
+  top: 1.2rem;
+  left: 1.4rem;
   z-index: 3;
 }
 .hero-logo {
-  height: 72px;
+  height: 110px;
   width: auto;
   object-fit: contain;
+  mix-blend-mode: multiply;
+  background: transparent;
 }
 
 /* Flores decorativas flutuantes */
