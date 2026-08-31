@@ -466,6 +466,16 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 .rodape-whats:hover { color: var(--vinho); border-color: var(--vinho); }
 
+.rodape-insta {
+  font-size: .78rem;
+  letter-spacing: .1em;
+  color: var(--rosa-medio);
+  border-bottom: 1px solid var(--rosa-petala);
+  padding-bottom: 2px;
+  transition: color var(--trans), border-color var(--trans);
+}
+.rodape-insta:hover { color: var(--vinho); border-color: var(--vinho); }
+
 /* ─── RESPONSIVO ─────────────────────────────────────────────────────── */
 @media (max-width: 400px) {
   .grade { grid-template-columns: 1fr; padding: 1rem .8rem 3rem; }
