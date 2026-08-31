@@ -3,10 +3,13 @@
     "id": 1,
     "nome": "Rosa",
     "descricao": "Rosa artesanal feita à mão com haste de chenille. Acompanha embalagem exclusiva — perfeita para presentear.",
-    "preco": 18.00,
+    "preco": 18.0,
     "foto": "https://i.imgur.com/Ht9pXlR.jpeg",
     "variacoes": {
-      "Cor": ["Vermelha", "Branca"]
+      "Cor": [
+        "Vermelha",
+        "Branca"
+      ]
     },
     "destaque": true
   },
@@ -14,7 +17,7 @@
     "id": 2,
     "nome": "Lírio Rosa e Branco",
     "descricao": "Lírio artesanal feito à mão com haste de chenille nas cores rosa e branco. Acompanha embalagem exclusiva.",
-    "preco": 18.00,
+    "preco": 18.0,
     "foto": "https://i.imgur.com/HPRbm6D.jpeg",
     "variacoes": {},
     "destaque": true
@@ -23,7 +26,7 @@
     "id": 3,
     "nome": "Lírio Branco",
     "descricao": "Lírio artesanal feito à mão com haste de chenille na cor branca. Delicado e elegante. Acompanha embalagem.",
-    "preco": 18.00,
+    "preco": 18.0,
     "foto": "https://i.imgur.com/js08mPe.jpeg",
     "variacoes": {},
     "destaque": true
@@ -32,7 +35,7 @@
     "id": 4,
     "nome": "Lírio Azul",
     "descricao": "Lírio artesanal feito à mão com haste de chenille na cor azul. Único e especial. Acompanha embalagem.",
-    "preco": 18.00,
+    "preco": 18.0,
     "foto": "https://i.imgur.com/sLgNMdD.jpeg",
     "variacoes": {},
     "destaque": true
@@ -41,7 +44,7 @@
     "id": 5,
     "nome": "Lírio Vermelho",
     "descricao": "Lírio artesanal feito à mão com haste de chenille na cor vermelha. Vibrante e marcante. Acompanha embalagem.",
-    "preco": 18.00,
+    "preco": 18.0,
     "foto": "https://i.imgur.com/qFFH7qL.jpeg",
     "variacoes": {},
     "destaque": true
@@ -55,5 +58,14 @@
     "variacoes": {},
     "destaque": true,
     "personalizado": true
+  },
+  {
+    "id": 7,
+    "nome": "Lírio Azul e Branco",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille nas cores azul e branco. Delicado e único. Acompanha embalagem exclusiva.",
+    "preco": 18.0,
+    "foto": "",
+    "variacoes": {},
+    "destaque": true
   }
 ]
