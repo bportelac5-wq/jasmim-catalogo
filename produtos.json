@@ -67,5 +67,23 @@
     "foto": "https://i.imgur.com/n3JJQc5.jpeg",
     "variacoes": {},
     "destaque": true
+  },
+  {
+    "id": 8,
+    "nome": "Gérbera",
+    "descricao": "Gérbera artesanal feita à mão com haste de chenille. Delicada e cheia de personalidade. Acompanha embalagem exclusiva.",
+    "preco": 15.0,
+    "foto": "https://i.imgur.com/01UCseR.jpeg",
+    "variacoes": {},
+    "destaque": true
+  },
+  {
+    "id": 9,
+    "nome": "Lírio Rosa Claro",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille na cor rosa claro. Delicado e romântico. Acompanha embalagem exclusiva.",
+    "preco": 18.0,
+    "foto": "https://i.imgur.com/HgPV1Xo.jpeg",
+    "variacoes": {},
+    "destaque": true
   }
 ]
