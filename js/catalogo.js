@@ -18,11 +18,6 @@ let buscaAtiva    = "";
 let produtoAtivo  = null;
 let varSelecionadas = {};
 
-// Carrossel
-let carrIndex   = 0;
-let carrTotal   = 0;
-let carrTimer   = null;
-let carrVisible = 1;
 
 const $ = id => document.getElementById(id);
 const fmt = p => p === 0 ? null : p.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -32,7 +27,7 @@ async function carregarProdutos() {
   try {
     const res = await fetch("produtos.json");
     produtos = await res.json();
-    iniciarCarrossel();
+      iniciarBanner();
     renderizar();
   } catch {
     $("grade-produtos").innerHTML =
@@ -117,97 +112,6 @@ function cartaoHTML(p) {
 }
 
 /* ─── CARROSSEL ───────────────────────────────────── */
-function iniciarCarrossel() {
-  const destaques = produtos.filter(p => CONFIG.destaques.includes(p.id));
-  const el = $("carrossel");
-  const dots = $("carr-dots");
-  if (!el || !destaques.length) return;
-
-  el.innerHTML = destaques.map(p => {
-    const foto = p.foto
-      ? `<img class="carr-foto" src="${p.foto}" alt="${p.nome}"
-              onerror="this.parentElement.innerHTML='<div class=carr-foto-placeholder>✿</div>'">`
-      : `<div class="carr-foto-placeholder">✿</div>`;
-    const preco = p.preco > 0 ? fmt(p.preco) : "sob consulta";
-    return `<div class="carr-slide" data-id="${p.id}">
-      ${foto}
-      <div class="carr-info">
-        <p class="carr-nome">${p.nome}</p>
-        <p class="carr-preco">${preco}</p>
-      </div>
-    </div>`;
-  }).join("");
-
-  carrTotal = destaques.length;
-
-  // Dots
-  dots.innerHTML = destaques.map((_, i) =>
-    `<button class="carr-dot${i === 0 ? " ativo" : ""}" data-i="${i}" aria-label="Slide ${i+1}"></button>`
-  ).join("");
-  dots.querySelectorAll(".carr-dot").forEach(d =>
-    d.addEventListener("click", () => irParaSlide(+d.dataset.i))
-  );
-
-  // Clicks nos slides
-  el.querySelectorAll(".carr-slide").forEach(s =>
-    s.addEventListener("click", () => abrirModal(+s.dataset.id))
-  );
-
-  atualizarCarrosselVisivel();
-  iniciarTimer();
-}
-
-function atualizarCarrosselVisivel() {
-  carrVisible = window.innerWidth <= 480 ? 2 : window.innerWidth <= 768 ? 3 : 6;
-}
-
-function irParaSlide(i) {
-  carrIndex = Math.max(0, Math.min(i, carrTotal - 1));
-  moverCarrossel();
-  reiniciarTimer();
-}
-
-function moverCarrossel() {
-  const el = $("carrossel");
-  if (!el || !el.children.length) return;
-  const gap = 12;
-  const slideW = el.children[0].offsetWidth + gap;
-  const maxIndex = Math.max(0, carrTotal - carrVisible);
-  carrIndex = Math.min(carrIndex, maxIndex);
-  el.style.transform = `translateX(-${carrIndex * slideW}px)`;
-
-  $("carr-dots").querySelectorAll(".carr-dot").forEach((d, i) =>
-    d.classList.toggle("ativo", i === carrIndex)
-  );
-}
-
-function iniciarTimer() {
-  carrTimer = setInterval(() => {
-    const maxIndex = Math.max(0, carrTotal - carrVisible);
-    carrIndex = carrIndex >= maxIndex ? 0 : carrIndex + 1;
-    moverCarrossel();
-  }, CONFIG.intervalo);
-}
-
-function reiniciarTimer() {
-  clearInterval(carrTimer);
-  iniciarTimer();
-}
-
-$("carr-prev")?.addEventListener("click", () => {
-  carrIndex = Math.max(0, carrIndex - 1);
-  moverCarrossel();
-  reiniciarTimer();
-});
-$("carr-next")?.addEventListener("click", () => {
-  carrIndex = Math.min(carrTotal - carrVisible, carrIndex + 1);
-  moverCarrossel();
-  reiniciarTimer();
-});
-window.addEventListener("resize", () => {
-  atualizarCarrosselVisivel();
-  moverCarrossel();
-});
 
 /* ─── MODAL ───────────────────────────────────────── */
 function abrirModal(id) {
@@ -284,6 +188,58 @@ $("modal-fechar").addEventListener("click", fecharModal);
 $("modal").addEventListener("click", e => { if (e.target === $("modal")) fecharModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") fecharModal(); });
 
+
+/* ─── BANNER ──────────────────────────────────────────────────────────── */
+let bannerIndex = 0;
+let bannerTimer = null;
+let bannerProdutos = [];
+
+function iniciarBanner() {
+  bannerProdutos = produtos.filter(p => p.foto && !p.personalizado);
+  if (!bannerProdutos.length) return;
+
+  const slides = $("banner-slides");
+  const dots   = $("banner-dots");
+
+  slides.innerHTML = bannerProdutos.map(p => `
+    <div class="banner-slide" data-id="${p.id}">
+      <img src="${p.foto}" alt="${p.nome}" loading="lazy" />
+      <div class="banner-slide-info">
+        <span class="banner-slide-nome">${p.nome}</span>
+        <span class="banner-slide-preco">${p.preco > 0 ? fmt(p.preco) : "sob consulta"}</span>
+      </div>
+    </div>`).join("");
+
+  dots.innerHTML = bannerProdutos.map((_, i) =>
+    `<button class="banner-dot${i === 0 ? " ativo" : ""}" data-i="${i}" aria-label="Slide ${i+1}"></button>`
+  ).join("");
+
+  slides.querySelectorAll(".banner-slide").forEach(s =>
+    s.addEventListener("click", () => abrirModal(+s.dataset.id))
+  );
+  dots.querySelectorAll(".banner-dot").forEach(d =>
+    d.addEventListener("click", () => { irBanner(+d.dataset.i); iniciarTimerBanner(); })
+  );
+
+  iniciarTimerBanner();
+}
+
+function irBanner(i) {
+  bannerIndex = ((i % bannerProdutos.length) + bannerProdutos.length) % bannerProdutos.length;
+  $("banner-slides").style.transform = `translateX(-${bannerIndex * 100}%)`;
+  $("banner-dots").querySelectorAll(".banner-dot").forEach((d, j) =>
+    d.classList.toggle("ativo", j === bannerIndex)
+  );
+}
+
+function iniciarTimerBanner() {
+  clearInterval(bannerTimer);
+  bannerTimer = setInterval(() => irBanner(bannerIndex + 1), 4000);
+}
+
+$("banner-prev")?.addEventListener("click", () => { irBanner(bannerIndex - 1); iniciarTimerBanner(); });
+$("banner-next")?.addEventListener("click", () => { irBanner(bannerIndex + 1); iniciarTimerBanner(); });
+
 /* ─── FILTROS ─────────────────────────────────────── */
 function setFiltro(filtro) {
   filtroAtivo = filtro;
@@ -291,6 +247,8 @@ function setFiltro(filtro) {
     b.classList.toggle("ativo", b.dataset.filtro === filtro);
   });
   renderizar();
+  // Rola até o catálogo
+  document.getElementById("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 document.querySelectorAll(".nav-btn, .nav-btn-mobile").forEach(btn => {
