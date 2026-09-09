@@ -284,9 +284,18 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 
 /* ─── CARROSSEL ───────────────────────────────────────────────────────── */
 .carrossel-section {
-  padding: 3rem 0 2rem;
-  background: var(--branco);
-  border-bottom: 1px solid rgba(232,164,184,.2);
+  padding: 1.6rem 0 1.2rem;
+  background: var(--rosa-blush);
+  border-bottom: 1px solid rgba(232,164,184,.25);
+}
+.carrossel-section .secao-titulo {
+  font-size: 1rem;
+  letter-spacing: .12em;
+  font-family: var(--fonte-corpo);
+  font-weight: 400;
+  color: var(--rosa-medio);
+  margin-bottom: .8rem;
+  text-transform: lowercase;
 }
 .carrossel-wrap {
   position: relative;
@@ -294,25 +303,26 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 3rem;
+  padding: 0 2.4rem;
+  overflow: hidden;
 }
 .carrossel {
   display: flex;
-  gap: 1.2rem;
-  overflow: hidden;
+  gap: .8rem;
   width: 100%;
+  transition: transform .5s ease;
 }
 .carr-slide {
-  min-width: calc(25% - .9rem);
-  background: var(--creme);
-  border-radius: var(--raio);
+  min-width: calc(16.66% - .7rem);
+  background: var(--branco);
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(232,164,184,.2);
+  border: 1px solid rgba(232,164,184,.25);
   cursor: pointer;
   transition: transform var(--trans), box-shadow var(--trans);
   flex-shrink: 0;
 }
-.carr-slide:hover { transform: translateY(-3px); box-shadow: var(--sombra); }
+.carr-slide:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(123,45,78,.1); }
 .carr-foto {
   aspect-ratio: 3/4;
   width: 100%;
@@ -324,59 +334,62 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 2rem;
   color: var(--rosa-petala);
   background: linear-gradient(135deg, var(--rosa-blush), var(--dourado-cl));
 }
-.carr-info { padding: .8rem 1rem; }
+.carr-info { padding: .5rem .7rem .6rem; }
 .carr-nome {
   font-family: var(--fonte-display);
-  font-size: 1rem;
+  font-size: .85rem;
   color: var(--vinho);
   font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .carr-preco {
-  font-size: .82rem;
+  font-size: .72rem;
   color: var(--rosa-medio);
-  margin-top: .2rem;
+  margin-top: .1rem;
 }
 
 .carr-btn {
   position: absolute;
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
-  width: 36px; height: 36px;
+  width: 28px; height: 28px;
   border-radius: 50%;
   background: var(--branco);
-  border: 1.5px solid var(--rosa-petala);
+  border: 1px solid var(--rosa-petala);
   color: var(--vinho);
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
   transition: all var(--trans);
-  box-shadow: var(--sombra);
+  box-shadow: 0 2px 8px rgba(123,45,78,.08);
 }
 .carr-btn:hover { background: var(--vinho); color: var(--branco); border-color: var(--vinho); }
-.carr-btn--prev { left: .4rem; }
-.carr-btn--next { right: .4rem; }
+.carr-btn--prev { left: .3rem; }
+.carr-btn--next { right: .3rem; }
 
 .carr-dots {
   display: flex;
   justify-content: center;
-  gap: .4rem;
-  margin-top: 1rem;
+  gap: .3rem;
+  margin-top: .7rem;
 }
 .carr-dot {
-  width: 7px; height: 7px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--rosa-petala);
   transition: background var(--trans), transform var(--trans);
   cursor: pointer;
   border: none;
 }
-.carr-dot.ativo { background: var(--vinho); transform: scale(1.3); }
+.carr-dot.ativo { background: var(--vinho); transform: scale(1.4); }
 
 /* ─── POR QUE COMPRAR ─────────────────────────────────────────────────── */
 .porque {
@@ -640,10 +653,10 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 @media (max-width: 768px) {
   .header-nav { display: none; }
   .header-menu { display: flex; }
-  .carr-slide { min-width: calc(50% - .6rem); }
+  .carr-slide { min-width: calc(33.33% - .55rem); }
 }
 @media (max-width: 480px) {
-  .carr-slide { min-width: calc(100%); }
+  .carr-slide { min-width: calc(50% - .4rem); }
   .grade { grid-template-columns: 1fr; padding: 0 .8rem; }
 }
 @media (prefers-reduced-motion: reduce) {
