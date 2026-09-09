@@ -1,50 +1,77 @@
-const CONFIG = { whatsapp: "5519992006605" };
+/* ═══════════════════════════════════════════════════
+   Jasmim Flores Artesanais — v3
+   ═══════════════════════════════════════════════════ */
 
-let produtos       = [];
-let filtroAtivo    = "todos";
-let produtoAtivo   = null;
+const CONFIG = {
+  whatsapp: "5519992006605",
+  // IDs dos produtos mais recentes (aparecem com badge "novo")
+  novos: [8, 9],
+  // IDs dos produtos em destaque no carrossel
+  destaques: [1, 2, 3, 4, 7, 8],
+  // Intervalo do carrossel em ms
+  intervalo: 3500,
+};
+
+let produtos      = [];
+let filtroAtivo   = "todos";
+let buscaAtiva    = "";
+let produtoAtivo  = null;
 let varSelecionadas = {};
 
-const $ = id => document.getElementById(id);
-const fmt = preco =>
-  preco === 0 ? null
-  : preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+// Carrossel
+let carrIndex   = 0;
+let carrTotal   = 0;
+let carrTimer   = null;
+let carrVisible = 1;
 
+const $ = id => document.getElementById(id);
+const fmt = p => p === 0 ? null : p.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+/* ─── CARREGAR PRODUTOS ───────────────────────────── */
 async function carregarProdutos() {
   try {
     const res = await fetch("produtos.json");
     produtos = await res.json();
+    iniciarCarrossel();
     renderizar();
-  } catch (e) {
+  } catch {
     $("grade-produtos").innerHTML =
-      `<p style="text-align:center;color:var(--texto-suave);padding:3rem">
-         Não foi possível carregar os produtos. Tente novamente.
-       </p>`;
+      `<p style="grid-column:1/-1;text-align:center;color:var(--texto-suave);padding:3rem">
+        Não foi possível carregar os produtos.
+      </p>`;
   }
 }
 
+/* ─── FILTRO + BUSCA ──────────────────────────────── */
 function filtrados() {
-  if (filtroAtivo === "todos")         return produtos;
-  if (filtroAtivo === "rosa")          return produtos.filter(p => p.nome.toLowerCase().startsWith("rosa"));
-  if (filtroAtivo === "lirio")         return produtos.filter(p => p.nome.toLowerCase().includes("lírio") || p.nome.toLowerCase().includes("lirio"));
-  if (filtroAtivo === "gerbera")       return produtos.filter(p => p.nome.toLowerCase().includes("gérbera") || p.nome.toLowerCase().includes("gerbera"));
-  if (filtroAtivo === "personalizado") return produtos.filter(p => p.personalizado);
-  return produtos;
+  let lista = produtos;
+
+  if (filtroAtivo === "rosa")          lista = lista.filter(p => p.nome.toLowerCase().startsWith("rosa"));
+  else if (filtroAtivo === "lirio")    lista = lista.filter(p => /l[íi]rio/i.test(p.nome));
+  else if (filtroAtivo === "gerbera")  lista = lista.filter(p => /g[eé]rbera/i.test(p.nome));
+  else if (filtroAtivo === "personalizado") lista = lista.filter(p => p.personalizado);
+
+  if (buscaAtiva.trim()) {
+    const q = buscaAtiva.toLowerCase();
+    lista = lista.filter(p => p.nome.toLowerCase().includes(q) || p.descricao.toLowerCase().includes(q));
+  }
+
+  return lista;
 }
 
+/* ─── RENDERIZAR GRADE ────────────────────────────── */
 function renderizar() {
   const grade = $("grade-produtos");
   const lista = filtrados();
 
   if (lista.length === 0) {
     grade.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--texto-suave);padding:3rem">
-      nenhum produto encontrado nesta categoria.
+      Nenhum produto encontrado.
     </p>`;
     return;
   }
 
   grade.innerHTML = lista.map(p => cartaoHTML(p)).join("");
-
   grade.querySelectorAll(".card").forEach(card => {
     card.addEventListener("click", () => abrirModal(+card.dataset.id));
     card.addEventListener("keydown", e => {
@@ -59,20 +86,24 @@ function cartaoHTML(p) {
             onerror="this.parentElement.innerHTML='<div class=card-foto-placeholder>✿</div>'" />`
     : `<div class="card-foto-placeholder">✿</div>`;
 
-  const badge = p.personalizado
+  const badgeDestaque = p.personalizado
     ? `<span class="card-badge" style="background:var(--vinho)">personalizado</span>`
     : `<span class="card-badge">destaque</span>`;
+
+  const badgeNovo = CONFIG.novos.includes(p.id)
+    ? `<span class="card-badge card-badge--novo">novo</span>`
+    : "";
 
   const precoHTML = p.personalizado || p.preco === 0
     ? `<span class="card-preco card-preco--consulta">sob consulta</span>`
     : `<span class="card-preco">${fmt(p.preco)}</span>`;
 
   return `
-    <article class="card" data-id="${p.id}" tabindex="0" role="button"
-             aria-label="Ver detalhes de ${p.nome}">
+    <article class="card" data-id="${p.id}" tabindex="0" role="button" aria-label="Ver detalhes de ${p.nome}">
       <div class="card-foto-wrap">
         ${fotoHTML}
-        ${badge}
+        ${badgeDestaque}
+        ${badgeNovo}
       </div>
       <div class="card-body">
         <h2 class="card-nome">${p.nome}</h2>
@@ -85,45 +116,126 @@ function cartaoHTML(p) {
     </article>`;
 }
 
+/* ─── CARROSSEL ───────────────────────────────────── */
+function iniciarCarrossel() {
+  const destaques = produtos.filter(p => CONFIG.destaques.includes(p.id));
+  const el = $("carrossel");
+  const dots = $("carr-dots");
+  if (!el || !destaques.length) return;
+
+  el.innerHTML = destaques.map(p => {
+    const foto = p.foto
+      ? `<img class="carr-foto" src="${p.foto}" alt="${p.nome}"
+              onerror="this.parentElement.innerHTML='<div class=carr-foto-placeholder>✿</div>'">`
+      : `<div class="carr-foto-placeholder">✿</div>`;
+    const preco = p.preco > 0 ? fmt(p.preco) : "sob consulta";
+    return `<div class="carr-slide" data-id="${p.id}">
+      ${foto}
+      <div class="carr-info">
+        <p class="carr-nome">${p.nome}</p>
+        <p class="carr-preco">${preco}</p>
+      </div>
+    </div>`;
+  }).join("");
+
+  carrTotal = destaques.length;
+
+  // Dots
+  dots.innerHTML = destaques.map((_, i) =>
+    `<button class="carr-dot${i === 0 ? " ativo" : ""}" data-i="${i}" aria-label="Slide ${i+1}"></button>`
+  ).join("");
+  dots.querySelectorAll(".carr-dot").forEach(d =>
+    d.addEventListener("click", () => irParaSlide(+d.dataset.i))
+  );
+
+  // Clicks nos slides
+  el.querySelectorAll(".carr-slide").forEach(s =>
+    s.addEventListener("click", () => abrirModal(+s.dataset.id))
+  );
+
+  atualizarCarrosselVisivel();
+  iniciarTimer();
+}
+
+function atualizarCarrosselVisivel() {
+  carrVisible = window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : 4;
+}
+
+function irParaSlide(i) {
+  carrIndex = Math.max(0, Math.min(i, carrTotal - carrVisible));
+  moverCarrossel();
+  reiniciarTimer();
+}
+
+function moverCarrossel() {
+  const el = $("carrossel");
+  if (!el) return;
+  const slideW = el.children[0]?.offsetWidth + 19 || 0;
+  el.style.transform = `translateX(-${carrIndex * slideW}px)`;
+  el.style.transition = "transform .4s ease";
+
+  $("carr-dots").querySelectorAll(".carr-dot").forEach((d, i) =>
+    d.classList.toggle("ativo", i === carrIndex)
+  );
+}
+
+function iniciarTimer() {
+  carrTimer = setInterval(() => {
+    carrIndex = (carrIndex + 1) % Math.max(1, carrTotal - carrVisible + 1);
+    moverCarrossel();
+  }, CONFIG.intervalo);
+}
+
+function reiniciarTimer() {
+  clearInterval(carrTimer);
+  iniciarTimer();
+}
+
+$("carr-prev")?.addEventListener("click", () => {
+  carrIndex = Math.max(0, carrIndex - 1);
+  moverCarrossel();
+  reiniciarTimer();
+});
+$("carr-next")?.addEventListener("click", () => {
+  carrIndex = Math.min(carrTotal - carrVisible, carrIndex + 1);
+  moverCarrossel();
+  reiniciarTimer();
+});
+window.addEventListener("resize", () => {
+  atualizarCarrosselVisivel();
+  moverCarrossel();
+});
+
+/* ─── MODAL ───────────────────────────────────────── */
 function abrirModal(id) {
   const p = produtos.find(x => x.id === id);
   if (!p) return;
-
-  produtoAtivo   = p;
+  produtoAtivo = p;
   varSelecionadas = {};
 
   const foto = $("modal-foto");
   if (p.foto) {
-    foto.src = p.foto;
-    foto.alt = p.nome;
-    foto.onerror = () => {
-      foto.parentElement.innerHTML = `<div class="card-foto-placeholder" style="height:100%">✿</div>`;
-    };
+    foto.src = p.foto; foto.alt = p.nome;
+    foto.onerror = () => foto.parentElement.innerHTML = `<div class="card-foto-placeholder" style="height:100%">✿</div>`;
   } else {
     foto.parentElement.innerHTML = `<div class="card-foto-placeholder" style="height:100%">✿</div>`;
   }
 
   $("modal-nome").textContent  = p.nome;
   $("modal-desc").textContent  = p.descricao;
-  $("modal-preco").textContent = p.personalizado || p.preco === 0
-    ? "valor sob consulta"
-    : fmt(p.preco);
+  $("modal-preco").textContent = p.personalizado || p.preco === 0 ? "valor sob consulta" : fmt(p.preco);
 
   const container = $("modal-variacoes");
   container.innerHTML = "";
-
   Object.entries(p.variacoes || {}).forEach(([tipo, opcoes]) => {
     const grupo = document.createElement("div");
     grupo.className = "variacao-grupo";
-
     const label = document.createElement("span");
     label.className = "variacao-label";
     label.textContent = tipo;
     grupo.appendChild(label);
-
     const linha = document.createElement("div");
     linha.className = "variacao-opcoes";
-
     opcoes.forEach(op => {
       const btn = document.createElement("button");
       btn.className = "variacao-btn";
@@ -136,16 +248,13 @@ function abrirModal(id) {
       });
       linha.appendChild(btn);
     });
-
     grupo.appendChild(linha);
     container.appendChild(grupo);
   });
 
   atualizarLinkWhats();
-
-  const overlay = $("modal");
-  overlay.classList.add("aberto");
-  overlay.querySelector(".modal-fechar").focus();
+  $("modal").classList.add("aberto");
+  $("modal-fechar").focus();
   document.body.style.overflow = "hidden";
 }
 
@@ -158,42 +267,64 @@ function fecharModal() {
 function atualizarLinkWhats() {
   if (!produtoAtivo) return;
   const p = produtoAtivo;
-
-  let msg = `Olá! Vi o catálogo da Jasmim Flores Artesanais e tenho interesse no produto:\n\n*${p.nome}*`;
-
-  if (p.preco > 0 && !p.personalizado) {
-    msg += `\nPreço: ${fmt(p.preco)}`;
-  }
-
+  let msg = `Olá! Vi o catálogo da Jasmim Flores Artesanais e tenho interesse:\n\n*${p.nome}*`;
+  if (p.preco > 0 && !p.personalizado) msg += `\nPreço: ${fmt(p.preco)}`;
   const vars = Object.entries(varSelecionadas);
-  if (vars.length > 0) {
-    msg += "\n\nOpções escolhidas:";
-    vars.forEach(([tipo, val]) => { msg += `\n• ${tipo}: ${val}`; });
-  } else if (Object.keys(p.variacoes || {}).length > 0) {
-    msg += "\n\n(Ainda vou escolher as opções)";
-  }
-
-  if (p.personalizado) {
-    msg += "\n\nGostaria de saber mais sobre encomenda personalizada.";
-  }
-
+  if (vars.length) { msg += "\n\nOpções:"; vars.forEach(([t, v]) => msg += `\n• ${t}: ${v}`); }
+  else if (Object.keys(p.variacoes || {}).length) msg += "\n\n(Ainda vou escolher as opções)";
+  if (p.personalizado) msg += "\n\nGostaria de saber mais sobre encomenda personalizada.";
   msg += "\n\nPoderia me ajudar? 🌸";
-
-  const link = $("modal-whats");
-  link.href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  $("modal-whats").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
 }
-
-document.querySelectorAll(".filtro-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("ativo"));
-    btn.classList.add("ativo");
-    filtroAtivo = btn.dataset.filtro;
-    renderizar();
-  });
-});
 
 $("modal-fechar").addEventListener("click", fecharModal);
 $("modal").addEventListener("click", e => { if (e.target === $("modal")) fecharModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") fecharModal(); });
 
+/* ─── FILTROS ─────────────────────────────────────── */
+function setFiltro(filtro) {
+  filtroAtivo = filtro;
+  document.querySelectorAll(".nav-btn, .nav-btn-mobile").forEach(b => {
+    b.classList.toggle("ativo", b.dataset.filtro === filtro);
+  });
+  renderizar();
+}
+
+document.querySelectorAll(".nav-btn, .nav-btn-mobile").forEach(btn => {
+  btn.addEventListener("click", () => setFiltro(btn.dataset.filtro));
+});
+
+/* ─── BUSCA ───────────────────────────────────────── */
+$("busca-toggle").addEventListener("click", () => {
+  $("busca-bar").classList.toggle("aberta");
+  if ($("busca-bar").classList.contains("aberta")) $("busca-input").focus();
+});
+$("busca-fechar").addEventListener("click", () => {
+  $("busca-bar").classList.remove("aberta");
+  buscaAtiva = "";
+  $("busca-input").value = "";
+  renderizar();
+});
+$("busca-input").addEventListener("input", e => {
+  buscaAtiva = e.target.value;
+  renderizar();
+});
+
+/* ─── MENU MOBILE ─────────────────────────────────── */
+$("menu-toggle").addEventListener("click", () => {
+  const nav = $("mobile-nav");
+  nav.classList.toggle("aberta");
+  $("menu-toggle").setAttribute("aria-expanded", nav.classList.contains("aberta"));
+});
+
+/* ─── HEADER SCROLL ───────────────────────────────── */
+window.addEventListener("scroll", () => {
+  $("header").classList.toggle("scrolled", window.scrollY > 10);
+  $("topo-btn").classList.toggle("visivel", window.scrollY > 400);
+});
+
+/* ─── BOTÃO TOPO ──────────────────────────────────── */
+$("topo-btn").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+/* ─── INICIAR ─────────────────────────────────────── */
 carregarProdutos();
