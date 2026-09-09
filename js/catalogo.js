@@ -25,7 +25,7 @@ async function carregarProdutos() {
 
 function filtrados() {
   if (filtroAtivo === "todos")         return produtos;
-  if (filtroAtivo === "rosa")          return produtos.filter(p => p.nome.toLowerCase().includes("rosa"));
+  if (filtroAtivo === "rosa")          return produtos.filter(p => p.nome.toLowerCase().startsWith("rosa"));
   if (filtroAtivo === "lirio")         return produtos.filter(p => p.nome.toLowerCase().includes("lírio") || p.nome.toLowerCase().includes("lirio"));
   if (filtroAtivo === "gerbera")       return produtos.filter(p => p.nome.toLowerCase().includes("gérbera") || p.nome.toLowerCase().includes("gerbera"));
   if (filtroAtivo === "personalizado") return produtos.filter(p => p.personalizado);
