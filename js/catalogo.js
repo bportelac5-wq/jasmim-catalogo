@@ -158,21 +158,23 @@ function iniciarCarrossel() {
 }
 
 function atualizarCarrosselVisivel() {
-  carrVisible = window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : 4;
+  carrVisible = window.innerWidth <= 480 ? 2 : window.innerWidth <= 768 ? 3 : 6;
 }
 
 function irParaSlide(i) {
-  carrIndex = Math.max(0, Math.min(i, carrTotal - carrVisible));
+  carrIndex = Math.max(0, Math.min(i, carrTotal - 1));
   moverCarrossel();
   reiniciarTimer();
 }
 
 function moverCarrossel() {
   const el = $("carrossel");
-  if (!el) return;
-  const slideW = el.children[0]?.offsetWidth + 19 || 0;
+  if (!el || !el.children.length) return;
+  const gap = 12;
+  const slideW = el.children[0].offsetWidth + gap;
+  const maxIndex = Math.max(0, carrTotal - carrVisible);
+  carrIndex = Math.min(carrIndex, maxIndex);
   el.style.transform = `translateX(-${carrIndex * slideW}px)`;
-  el.style.transition = "transform .4s ease";
 
   $("carr-dots").querySelectorAll(".carr-dot").forEach((d, i) =>
     d.classList.toggle("ativo", i === carrIndex)
@@ -181,7 +183,8 @@ function moverCarrossel() {
 
 function iniciarTimer() {
   carrTimer = setInterval(() => {
-    carrIndex = (carrIndex + 1) % Math.max(1, carrTotal - carrVisible + 1);
+    const maxIndex = Math.max(0, carrTotal - carrVisible);
+    carrIndex = carrIndex >= maxIndex ? 0 : carrIndex + 1;
     moverCarrossel();
   }, CONFIG.intervalo);
 }
