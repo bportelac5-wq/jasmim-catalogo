@@ -14,6 +14,15 @@
     "destaque": true
   },
   {
+    "id": 10,
+    "nome": "Rosa Branca",
+    "descricao": "Rosa branca artesanal feita à mão com haste de chenille. Delicada e elegante. Acompanha embalagem exclusiva.",
+    "preco": 18.0,
+    "foto": "https://i.imgur.com/R8Qi4uP.jpeg",
+    "variacoes": {},
+    "destaque": true
+  },
+  {
     "id": 2,
     "nome": "Lírio Rosa e Branco",
     "descricao": "Lírio artesanal feito à mão com haste de chenille nas cores rosa e branco. Acompanha embalagem exclusiva.",
@@ -50,30 +59,11 @@
     "destaque": true
   },
   {
-    "id": 6,
-    "nome": "Encomenda Personalizada",
-    "descricao": "Crie a flor dos seus sonhos! Escolha tipo, cor e estilo. Feita exclusivamente para você com muito carinho.",
-    "preco": 0,
-    "foto": "https://i.imgur.com/CyZwUeZ.jpeg",
-    "variacoes": {},
-    "destaque": true,
-    "personalizado": true
-  },
-  {
     "id": 7,
     "nome": "Lírio Azul e Branco",
     "descricao": "Lírio artesanal feito à mão com haste de chenille nas cores azul e branco. Delicado e único. Acompanha embalagem exclusiva.",
     "preco": 18.0,
     "foto": "https://i.imgur.com/n3JJQc5.jpeg",
-    "variacoes": {},
-    "destaque": true
-  },
-  {
-    "id": 8,
-    "nome": "Gérbera",
-    "descricao": "Gérbera artesanal feita à mão com haste de chenille. Delicada e cheia de personalidade. Acompanha embalagem exclusiva.",
-    "preco": 15.0,
-    "foto": "https://i.imgur.com/01UCseR.jpeg",
     "variacoes": {},
     "destaque": true
   },
@@ -87,12 +77,22 @@
     "destaque": true
   },
   {
-    "id": 10,
-    "nome": "Rosa Branca",
-    "descricao": "Rosa branca artesanal feita à mão com haste de chenille. Delicada e elegante. Acompanha embalagem exclusiva.",
-    "preco": 18.0,
-    "foto": "https://i.imgur.com/R8Qi4uP.jpeg",
+    "id": 8,
+    "nome": "Gérbera",
+    "descricao": "Gérbera artesanal feita à mão com haste de chenille. Delicada e cheia de personalidade. Acompanha embalagem exclusiva.",
+    "preco": 15.0,
+    "foto": "https://i.imgur.com/01UCseR.jpeg",
     "variacoes": {},
     "destaque": true
+  },
+  {
+    "id": 6,
+    "nome": "Encomenda Personalizada",
+    "descricao": "Crie a flor dos seus sonhos! Escolha tipo, cor e estilo. Feita exclusivamente para você com muito carinho.",
+    "preco": 0,
+    "foto": "https://i.imgur.com/CyZwUeZ.jpeg",
+    "variacoes": {},
+    "destaque": true,
+    "personalizado": true
   }
 ]
