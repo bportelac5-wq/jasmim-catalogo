@@ -85,5 +85,14 @@
     "foto": "https://i.imgur.com/HgPV1Xo.jpeg",
     "variacoes": {},
     "destaque": true
+  },
+  {
+    "id": 10,
+    "nome": "Rosa Branca",
+    "descricao": "Rosa branca artesanal feita à mão com haste de chenille. Delicada e elegante. Acompanha embalagem exclusiva.",
+    "preco": 18.0,
+    "foto": "https://i.imgur.com/R8Qi4uP.jpeg",
+    "variacoes": {},
+    "destaque": true
   }
 ]
