@@ -44,6 +44,8 @@ function filtrados() {
   if (filtroAtivo === "rosa")          lista = lista.filter(p => p.nome.toLowerCase().startsWith("rosa"));
   else if (filtroAtivo === "lirio")    lista = lista.filter(p => /l[íi]rio/i.test(p.nome));
   else if (filtroAtivo === "gerbera")  lista = lista.filter(p => /g[eé]rbera/i.test(p.nome));
+  else if (filtroAtivo === "girassol") lista = lista.filter(p => /girassol/i.test(p.nome));
+  else if (filtroAtivo === "safira")   lista = lista.filter(p => /safira/i.test(p.nome));
   else if (filtroAtivo === "personalizado") lista = lista.filter(p => p.personalizado);
 
   if (buscaAtiva.trim()) {
