@@ -82,18 +82,20 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* Navegação desktop */
 .header-nav {
   display: flex;
-  gap: .3rem;
+  gap: .15rem;
   flex: 1;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 .nav-btn {
-  padding: .38rem 1rem;
+  padding: .35rem .65rem;
   border-radius: 100px;
-  font-size: .78rem;
-  letter-spacing: .08em;
+  font-size: .72rem;
+  letter-spacing: .04em;
   color: var(--texto-suave);
   transition: all var(--trans);
   border: 1.5px solid transparent;
+  white-space: nowrap;
 }
 .nav-btn:hover { color: var(--vinho); border-color: var(--rosa-petala); }
 .nav-btn.ativo {
