@@ -1,0 +1,4 @@
+{
+  "buildCommand": "node scripts/validar-produtos.mjs",
+  "outputDirectory": "."
+}
