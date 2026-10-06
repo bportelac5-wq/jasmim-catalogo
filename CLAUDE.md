@@ -6,7 +6,7 @@ Catálogo online da **Jasmim Flores Artesanais** (flores de chenille feitas à m
 
 - HTML + CSS + JavaScript puro (ES2020+, sem framework, sem bundler, sem `package.json`).
 - Dados em `produtos.json`, carregado com `fetch` quando a página abre.
-- Fotos, logo, favicon e imagem de OG hospedados no **Imgur** (não há pasta `img/` no repo).
+- Fotos em `img/produtos/`, logo em `img/logo.png` (também favicon e `og:image`, este com URL absoluta da Vercel). Até 2026-10-06 tudo ficava no Imgur.
 - Fontes do Google Fonts (Cormorant Garamond para títulos, Jost para o texto).
 - Hospedagem estática: Vercel (URL canônica) e GitHub Pages.
 - Node só para o script de validação (`scripts/validar-produtos.mjs`). A página não usa Node.
@@ -18,7 +18,9 @@ index.html                        Marcação da página toda: header, banner, he
 produtos.json                     Lista de produtos (é a "base de dados")
 js/catalogo.js                    Toda a lógica: carregar, filtrar, buscar, renderizar, modal, banner, WhatsApp
 css/style.css                     Todo o visual; tokens de cor e fonte em :root
-scripts/validar-produtos.mjs      Valida o produtos.json (sintaxe, campos, ids únicos, tipos)
+img/logo.png                      Logo, favicon e og:image
+img/produtos/                     Fotos dos produtos (nomes em minúsculas, sem acento, com hífen)
+scripts/validar-produtos.mjs      Valida o produtos.json (sintaxe, campos, ids únicos, tipos, foto existe com o nome exato)
 vercel.json                       Build da Vercel = rodar o validador; serve a raiz
 .github/workflows/validar-produtos.yml   Mesmo validador em todo push/PR
 README.md                         Guia para a dona da loja (não é dev). Mantenha a linguagem simples
@@ -34,8 +36,6 @@ README.md                         Guia para a dona da loja (não é dev). Manten
 python -m http.server 8000           # abra http://localhost:8000
 node scripts/validar-produtos.mjs    # valida o JSON; rode sempre que mexer nele
 ```
-
-O `<meta name="referrer" content="no-referrer">` no `index.html` é necessário: o Imgur responde 403 para requisições com referer `localhost`/`127.0.0.1`. Sem essa meta, nenhuma foto carrega em teste local. Não remova.
 
 Não há testes automatizados de UI. Para testar sem a extensão do Chrome, dá para usar o Edge headless com `--remote-debugging-port` e um script Node falando CDP via `WebSocket` (Node 22+ já tem). Não precisa instalar nada.
 
@@ -54,7 +54,7 @@ Não há testes automatizados de UI. Para testar sem a extensão do Chrome, dá 
   "nome": "Lírio Azul",           // os filtros de categoria dependem do nome (ver abaixo)
   "descricao": "...",
   "preco": 18.0,                  // 0 = "sob consulta"
-  "foto": "https://i.imgur.com/xxxx.jpeg",
+  "foto": "img/produtos/lirio-azul.jpg",   // o validador confere se existe com o nome EXATO (a Vercel diferencia maiúsculas)
   "variacoes": { "Cor": ["Vermelha", "Branca"] },   // {} se não tiver
   "destaque": true,               // selo "destaque" + entra no banner
   "novo": true,                   // opcional: selo "novo"
@@ -97,7 +97,8 @@ Ao editar o JSON à mão, insira campos por texto, sem reserializar o arquivo in
 
 ## Pontos de atenção
 
-- **Imgur é ponto único de falha** para todas as imagens. O site degrada bem (placeholder ✿), mas fica sem fotos se o Imgur cair ou apagar algo. Hospedar as fotos no próprio repo (`img/`) eliminaria isso.
+- As fotos têm o tamanho original do Imgur (1200×1600, ~200–560 KB cada, ~4,7 MB no total). Os cards usam `loading="lazy"`. Se o peso virar problema, gere versões menores.
+- Se voltar a usar imagem externa: o Imgur responde 403 para referer `localhost`. O `<meta name="referrer" content="no-referrer">` do `index.html` contorna isso.
 - O selo `novo` é manual no JSON; alguém precisa tirar quando deixar de ser novidade.
 
 ## Ao mexer aqui

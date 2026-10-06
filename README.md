@@ -10,6 +10,9 @@ jasmim-catalogo/
 ├── index.html          ← página principal (não edite)
 ├── css/style.css       ← visual (não edite)
 ├── js/catalogo.js      ← lógica (não edite, só o número do WhatsApp)
+├── img/
+│   ├── logo.png        ← logo (também é o ícone da aba e a imagem ao compartilhar)
+│   └── produtos/       ← AQUI ficam as fotos dos produtos
 ├── scripts/            ← conferência automática do produtos.json (não edite)
 ├── vercel.json         ← configuração da publicação (não edite)
 └── README.md           ← este arquivo
@@ -29,7 +32,7 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
   "nome": "Nome do produto",
   "descricao": "Descrição curta do produto aqui.",
   "preco": 18.0,
-  "foto": "https://i.imgur.com/XXXXXXX.jpeg",
+  "foto": "img/produtos/nome-da-foto.jpg",
   "variacoes": {
     "Cor": ["Rosa", "Branco", "Lilás"]
   },
@@ -43,7 +46,7 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
 - `nome` → nome do produto. **Os filtros do menu leem o nome:** começa com "Rosa" → Rosas; tem "Lírio" → Lírios; também Gérbera, Girassol e Safira.
 - `descricao` → descrição curta.
 - `preco` → número com ponto (ex.: `18.0`). Use `0` para "sob consulta".
-- `foto` → link da foto (veja abaixo).
+- `foto` → caminho da foto (veja abaixo).
 - `variacoes` → opções que a cliente escolhe (cor, tamanho...). Use `{}` se não tiver.
 - `destaque` → `true` aparece no banner do topo e com o selo "destaque"; `false` não.
 - `novo` → `true` mostra o selo "novo". Tire (ou mude para `false`) quando deixar de ser novidade.
@@ -54,12 +57,13 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
 
 ## Como adicionar fotos
 
-1. Entre em [imgur.com](https://imgur.com) e envie a foto.
-2. Clique com o botão direito na foto → **Copiar endereço da imagem**.
-3. O link precisa começar com `https://i.imgur.com/` e terminar em `.jpeg`, `.jpg` ou `.png`.
-4. Cole no campo `"foto"`.
+1. Renomeie a foto **sem espaço, sem acento e em minúsculas** (ex.: `lirio-lilas.jpg`).
+2. No GitHub, entre na pasta `img/produtos` → **Add file** → **Upload files** → arraste a foto → **Commit changes**.
+3. No `produtos.json`, coloque o caminho: `"foto": "img/produtos/lirio-lilas.jpg"`.
 
-**Dica:** fotos quadradas ou 4:3 ficam melhores. Se uma foto sair do ar, o site mostra uma florzinha ✿ no lugar e continua funcionando.
+O nome no JSON precisa ser **idêntico** ao do arquivo, inclusive maiúsculas e a extensão (`.jpg` ≠ `.jpeg`). Se não bater, a conferência automática avisa com um ❌ antes de publicar.
+
+**Dica:** fotos em pé (3:4) ou quadradas ficam melhores, e de até uns 500 KB para o site abrir rápido no celular. Se uma foto faltar, o site mostra uma florzinha ✿ no lugar e continua funcionando.
 
 ---
 
@@ -93,7 +97,7 @@ Para criar um produto "sob consulta" sem preço fixo:
   "nome": "Encomenda Personalizada",
   "descricao": "Descreva o que você quer e criamos juntas.",
   "preco": 0,
-  "foto": "https://i.imgur.com/XXXXXXX.jpeg",
+  "foto": "img/produtos/personalizado.jpg",
   "variacoes": {},
   "destaque": true,
   "personalizado": true
