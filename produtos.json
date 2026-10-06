@@ -92,7 +92,8 @@
     "preco": 18.0,
     "foto": "https://i.imgur.com/H5On3ol.jpeg",
     "variacoes": {},
-    "destaque": true
+    "destaque": true,
+    "novo": true
   },
   {
     "id": 12,
@@ -101,7 +102,8 @@
     "preco": 18.0,
     "foto": "https://i.imgur.com/qB0LzW3.jpeg",
     "variacoes": {},
-    "destaque": true
+    "destaque": true,
+    "novo": true
   },
   {
     "id": 13,
@@ -110,7 +112,8 @@
     "preco": 36.0,
     "foto": "https://i.imgur.com/7S0iyOZ.jpeg",
     "variacoes": {},
-    "destaque": true
+    "destaque": true,
+    "novo": true
   },
   {
     "id": 6,

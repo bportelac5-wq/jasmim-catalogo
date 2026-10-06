@@ -3,13 +3,10 @@
    ═══════════════════════════════════════════════════ */
 
 const CONFIG = {
+  // Único lugar do número: links e texto do header/rodapé são preenchidos a partir daqui
   whatsapp: "5519992006605",
-  // IDs dos produtos mais recentes (aparecem com badge "novo")
-  novos: [8, 9],
-  // IDs dos produtos em destaque no carrossel
-  destaques: [1, 2, 3, 4, 7, 8],
-  // Intervalo do carrossel em ms
-  intervalo: 3500,
+  // Intervalo do banner em ms
+  intervalo: 4000,
 };
 
 let produtos      = [];
@@ -17,41 +14,66 @@ let filtroAtivo   = "todos";
 let buscaAtiva    = "";
 let produtoAtivo  = null;
 let varSelecionadas = {};
+let focoAntesModal  = null;
 
 
 const $ = id => document.getElementById(id);
 const fmt = p => p === 0 ? null : p.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+// Escapa texto antes de entrar em innerHTML
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+// Minúsculas e sem acento: "Lírio" e "lirio" casam
+const norm = s => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+const PLACEHOLDER = `<div class="card-foto-placeholder">✿</div>`;
+// Troca só a <img> que falhou pelo placeholder, sem apagar o resto do bloco
+const onerrorFoto = `onerror="this.outerHTML='${PLACEHOLDER.replace(/"/g, "&quot;")}'"`;
+
+/* ─── WHATSAPP ────────────────────────────────────── */
+function aplicarWhatsApp() {
+  const n = CONFIG.whatsapp.replace(/^55/, "");
+  const legivel = `(${n.slice(0, 2)}) ${n.slice(2, -4)}-${n.slice(-4)}`;
+  document.querySelectorAll("[data-whats]").forEach(a => a.href = `https://wa.me/${CONFIG.whatsapp}`);
+  document.querySelectorAll("[data-whats-texto]").forEach(el => el.textContent = legivel);
+}
 
 /* ─── CARREGAR PRODUTOS ───────────────────────────── */
 async function carregarProdutos() {
   try {
-    const res = await fetch("produtos.json");
+    const res = await fetch("produtos.json", { cache: "no-cache" });
+    if (!res.ok) throw new Error(res.status);
     produtos = await res.json();
-      iniciarBanner();
+    iniciarBanner();
     renderizar();
   } catch {
-    $("grade-produtos").innerHTML =
-      `<p style="grid-column:1/-1;text-align:center;color:var(--texto-suave);padding:3rem">
-        Não foi possível carregar os produtos.
-      </p>`;
+    $("banner").hidden = true;
+    mensagemGrade(`Não foi possível carregar os produtos agora.<br>
+      <a href="https://wa.me/${CONFIG.whatsapp}" target="_blank" rel="noopener">Fale com a gente pelo WhatsApp</a> 🌸`);
   }
 }
 
+function mensagemGrade(html) {
+  $("grade-produtos").innerHTML = `<p class="grade-msg">${html}</p>`;
+}
+
 /* ─── FILTRO + BUSCA ──────────────────────────────── */
+// Categoria = trecho do nome. Para criar uma nova: botão nas duas navs do index.html + uma linha aqui
+const FILTROS = {
+  rosa:          p => norm(p.nome).startsWith("rosa"),
+  lirio:         p => norm(p.nome).includes("lirio"),
+  gerbera:       p => norm(p.nome).includes("gerbera"),
+  girassol:      p => norm(p.nome).includes("girassol"),
+  safira:        p => norm(p.nome).includes("safira"),
+  personalizado: p => p.personalizado,
+};
+
 function filtrados() {
   let lista = produtos;
 
-  if (filtroAtivo === "rosa")          lista = lista.filter(p => p.nome.toLowerCase().startsWith("rosa"));
-  else if (filtroAtivo === "lirio")    lista = lista.filter(p => /l[íi]rio/i.test(p.nome));
-  else if (filtroAtivo === "gerbera")  lista = lista.filter(p => /g[eé]rbera/i.test(p.nome));
-  else if (filtroAtivo === "girassol") lista = lista.filter(p => /girassol/i.test(p.nome));
-  else if (filtroAtivo === "safira")   lista = lista.filter(p => /safira/i.test(p.nome));
-  else if (filtroAtivo === "personalizado") lista = lista.filter(p => p.personalizado);
+  if (FILTROS[filtroAtivo]) lista = lista.filter(FILTROS[filtroAtivo]);
 
-  if (buscaAtiva.trim()) {
-    const q = buscaAtiva.toLowerCase();
-    lista = lista.filter(p => p.nome.toLowerCase().includes(q) || p.descricao.toLowerCase().includes(q));
-  }
+  const q = norm(buscaAtiva.trim());
+  if (q) lista = lista.filter(p => norm(p.nome).includes(q) || norm(p.descricao).includes(q));
 
   return lista;
 }
@@ -62,9 +84,7 @@ function renderizar() {
   const lista = filtrados();
 
   if (lista.length === 0) {
-    grade.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--texto-suave);padding:3rem">
-      Nenhum produto encontrado.
-    </p>`;
+    mensagemGrade("Nenhum produto encontrado.");
     return;
   }
 
@@ -72,22 +92,21 @@ function renderizar() {
   grade.querySelectorAll(".card").forEach(card => {
     card.addEventListener("click", () => abrirModal(+card.dataset.id));
     card.addEventListener("keydown", e => {
-      if (e.key === "Enter" || e.key === " ") abrirModal(+card.dataset.id);
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); abrirModal(+card.dataset.id); }
     });
   });
 }
 
 function cartaoHTML(p) {
   const fotoHTML = p.foto
-    ? `<img class="card-foto" src="${p.foto}" alt="${p.nome}"
-            onerror="this.parentElement.innerHTML='<div class=card-foto-placeholder>✿</div>'" />`
-    : `<div class="card-foto-placeholder">✿</div>`;
+    ? `<img class="card-foto" src="${esc(p.foto)}" alt="${esc(p.nome)}" loading="lazy" ${onerrorFoto} />`
+    : PLACEHOLDER;
 
   const badgeDestaque = p.personalizado
     ? `<span class="card-badge" style="background:var(--vinho)">personalizado</span>`
-    : `<span class="card-badge">destaque</span>`;
+    : p.destaque ? `<span class="card-badge">destaque</span>` : "";
 
-  const badgeNovo = CONFIG.novos.includes(p.id)
+  const badgeNovo = p.novo
     ? `<span class="card-badge card-badge--novo">novo</span>`
     : "";
 
@@ -96,15 +115,15 @@ function cartaoHTML(p) {
     : `<span class="card-preco">${fmt(p.preco)}</span>`;
 
   return `
-    <article class="card" data-id="${p.id}" tabindex="0" role="button" aria-label="Ver detalhes de ${p.nome}">
+    <article class="card" data-id="${esc(p.id)}" tabindex="0" role="button" aria-label="Ver detalhes de ${esc(p.nome)}">
       <div class="card-foto-wrap">
         ${fotoHTML}
         ${badgeDestaque}
         ${badgeNovo}
       </div>
       <div class="card-body">
-        <h2 class="card-nome">${p.nome}</h2>
-        <p class="card-desc">${p.descricao}</p>
+        <h2 class="card-nome">${esc(p.nome)}</h2>
+        <p class="card-desc">${esc(p.descricao)}</p>
         <div class="card-rodape">
           ${precoHTML}
           <span class="card-ver">ver mais</span>
@@ -113,21 +132,27 @@ function cartaoHTML(p) {
     </article>`;
 }
 
-/* ─── CARROSSEL ───────────────────────────────────── */
-
 /* ─── MODAL ───────────────────────────────────────── */
 function abrirModal(id) {
   const p = produtos.find(x => x.id === id);
   if (!p) return;
   produtoAtivo = p;
   varSelecionadas = {};
+  if (!$("modal").classList.contains("aberto")) focoAntesModal = document.activeElement;
 
+  // A <img> nunca é removida do DOM: só alterna com o placeholder
   const foto = $("modal-foto");
+  const semFoto = $("modal-foto-placeholder");
+  const mostrarPlaceholder = sim => { foto.hidden = sim; semFoto.hidden = !sim; };
+  foto.onerror = () => mostrarPlaceholder(true);
+  foto.removeAttribute("src");
   if (p.foto) {
-    foto.src = p.foto; foto.alt = p.nome;
-    foto.onerror = () => foto.parentElement.innerHTML = `<div class="card-foto-placeholder" style="height:100%">✿</div>`;
+    mostrarPlaceholder(false);
+    foto.alt = p.nome;
+    foto.src = p.foto;
   } else {
-    foto.parentElement.innerHTML = `<div class="card-foto-placeholder" style="height:100%">✿</div>`;
+    foto.alt = "";
+    mostrarPlaceholder(true);
   }
 
   $("modal-nome").textContent  = p.nome;
@@ -168,9 +193,11 @@ function abrirModal(id) {
 }
 
 function fecharModal() {
+  if (!$("modal").classList.contains("aberto")) return;
   $("modal").classList.remove("aberto");
   document.body.style.overflow = "";
   produtoAtivo = null;
+  focoAntesModal?.focus?.();
 }
 
 function atualizarLinkWhats() {
@@ -189,6 +216,14 @@ function atualizarLinkWhats() {
 $("modal-fechar").addEventListener("click", fecharModal);
 $("modal").addEventListener("click", e => { if (e.target === $("modal")) fecharModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") fecharModal(); });
+// Mantém o Tab dentro do modal enquanto ele está aberto
+$("modal").addEventListener("keydown", e => {
+  if (e.key !== "Tab") return;
+  const focaveis = [...$("modal").querySelectorAll("button, a[href]")];
+  const primeiro = focaveis[0], ultimo = focaveis[focaveis.length - 1];
+  if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
+  else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
+});
 
 
 /* ─── BANNER ──────────────────────────────────────────────────────────── */
@@ -197,17 +232,17 @@ let bannerTimer = null;
 let bannerProdutos = [];
 
 function iniciarBanner() {
-  bannerProdutos = produtos.filter(p => p.foto && !p.personalizado);
-  if (!bannerProdutos.length) return;
+  bannerProdutos = produtos.filter(p => p.foto && p.destaque && !p.personalizado);
+  if (!bannerProdutos.length) { $("banner").hidden = true; return; }
 
   const slides = $("banner-slides");
   const dots   = $("banner-dots");
 
   slides.innerHTML = bannerProdutos.map(p => `
-    <div class="banner-slide" data-id="${p.id}">
-      <img src="${p.foto}" alt="${p.nome}" loading="lazy" />
+    <div class="banner-slide" data-id="${esc(p.id)}">
+      <img src="${esc(p.foto)}" alt="${esc(p.nome)}" loading="lazy" ${onerrorFoto} />
       <div class="banner-slide-info">
-        <span class="banner-slide-nome">${p.nome}</span>
+        <span class="banner-slide-nome">${esc(p.nome)}</span>
         <span class="banner-slide-preco">${p.preco > 0 ? fmt(p.preco) : "sob consulta"}</span>
       </div>
     </div>`).join("");
@@ -227,6 +262,7 @@ function iniciarBanner() {
 }
 
 function irBanner(i) {
+  if (!bannerProdutos.length) return;
   bannerIndex = ((i % bannerProdutos.length) + bannerProdutos.length) % bannerProdutos.length;
   $("banner-slides").style.transform = `translateX(-${bannerIndex * 100}%)`;
   $("banner-dots").querySelectorAll(".banner-dot").forEach((d, j) =>
@@ -236,7 +272,7 @@ function irBanner(i) {
 
 function iniciarTimerBanner() {
   clearInterval(bannerTimer);
-  bannerTimer = setInterval(() => irBanner(bannerIndex + 1), 4000);
+  bannerTimer = setInterval(() => irBanner(bannerIndex + 1), CONFIG.intervalo);
 }
 
 $("banner-prev")?.addEventListener("click", () => { irBanner(bannerIndex - 1); iniciarTimerBanner(); });
@@ -248,6 +284,9 @@ function setFiltro(filtro) {
   document.querySelectorAll(".nav-btn, .nav-btn-mobile").forEach(b => {
     b.classList.toggle("ativo", b.dataset.filtro === filtro);
   });
+  // Fecha o menu mobile depois de escolher
+  $("mobile-nav").classList.remove("aberta");
+  $("menu-toggle").setAttribute("aria-expanded", "false");
   renderizar();
   // Rola até o catálogo
   document.getElementById("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -290,4 +329,5 @@ window.addEventListener("scroll", () => {
 $("topo-btn").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
 /* ─── INICIAR ─────────────────────────────────────── */
+aplicarWhatsApp();
 carregarProdutos();
