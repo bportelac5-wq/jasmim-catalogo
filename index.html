@@ -26,7 +26,7 @@
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Jost:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -81,26 +81,21 @@
     </nav>
   </header>
 
-  <!-- ─── BANNER ──────────────────────────────────────────────────────── -->
-  <div class="banner" id="banner">
-    <div class="banner-slides-wrap">
-      <div class="banner-slides" id="banner-slides"></div>
-      <button class="banner-btn banner-btn--prev" id="banner-prev" aria-label="Anterior">‹</button>
-      <button class="banner-btn banner-btn--next" id="banner-next" aria-label="Próximo">›</button>
-    </div>
-    <div class="banner-dots" id="banner-dots"></div>
-  </div>
-
-  <!-- ─── HERO ────────────────────────────────────────────────────────── -->
+  <!-- ─── HERO (com o banner de destaques) ────────────────────────────── -->
   <section class="hero">
-    <div class="hero-flor hero-flor--1" aria-hidden="true">✿</div>
-    <div class="hero-flor hero-flor--2" aria-hidden="true">❀</div>
-    <div class="hero-flor hero-flor--3" aria-hidden="true">✾</div>
-    <div class="hero-inner">
-      <p class="hero-eyebrow">flores artesanais · feitas à mão</p>
+    <div class="hero-texto">
       <h1 class="hero-titulo">Jasmim</h1>
-      <p class="hero-sub">Cada flor nasce de fio e afeto.<br>Nenhuma murcha, nenhuma igual à outra.</p>
+      <p class="hero-sub">Flores de chenille feitas à mão. Cada uma nasce de fio e afeto, nenhuma murcha e nenhuma sai igual à outra.</p>
       <a href="#catalogo" class="btn-ver">ver catálogo</a>
+    </div>
+
+    <div class="banner" id="banner">
+      <div class="banner-slides-wrap">
+        <div class="banner-slides" id="banner-slides"></div>
+        <button class="banner-btn banner-btn--prev" id="banner-prev" aria-label="Anterior">‹</button>
+        <button class="banner-btn banner-btn--next" id="banner-next" aria-label="Próximo">›</button>
+      </div>
+      <div class="banner-dots" id="banner-dots"></div>
     </div>
   </section>
 
@@ -108,31 +103,27 @@
   <section class="porque" aria-label="Diferenciais">
     <div class="porque-grid">
       <div class="porque-item">
-        <div class="porque-icone">🌸</div>
         <h3 class="porque-titulo">Feita à mão</h3>
-        <p class="porque-desc">Cada flor é única, criada com cuidado e dedicação em cada detalhe.</p>
+        <p class="porque-desc">Cada pétala é moldada uma a uma, por isso duas flores nunca saem iguais.</p>
       </div>
       <div class="porque-item">
-        <div class="porque-icone">✨</div>
-        <h3 class="porque-titulo">Dura para sempre</h3>
-        <p class="porque-desc">Não murcha, não perde a cor. Uma lembrança eterna de um momento especial.</p>
+        <h3 class="porque-titulo">Não murcha</h3>
+        <p class="porque-desc">Não precisa de água nem de sol, e a cor continua a mesma com o tempo.</p>
       </div>
       <div class="porque-item">
-        <div class="porque-icone">📦</div>
-        <h3 class="porque-titulo">Embalagem exclusiva</h3>
-        <p class="porque-desc">Cada flor acompanha embalagem especial — pronta para presentear.</p>
+        <h3 class="porque-titulo">Pronta para presentear</h3>
+        <p class="porque-desc">Vai presa num cartão de papel, com laço de fita de cetim.</p>
       </div>
       <div class="porque-item">
-        <div class="porque-icone">💬</div>
-        <h3 class="porque-titulo">Atendimento direto</h3>
-        <p class="porque-desc">Fale direto com a criadora pelo WhatsApp e personalize sua encomenda.</p>
+        <h3 class="porque-titulo">Direto com a criadora</h3>
+        <p class="porque-desc">O pedido é pelo WhatsApp, e dá para encomendar cores e arranjos.</p>
       </div>
     </div>
   </section>
 
   <!-- ─── CATÁLOGO ─────────────────────────────────────────────────────── -->
   <section id="catalogo" class="catalogo-section">
-    <h2 class="secao-titulo">🌺 Catálogo</h2>
+    <h2 class="secao-titulo">Catálogo</h2>
     <main class="grade" id="grade-produtos" aria-live="polite"></main>
   </section>
 

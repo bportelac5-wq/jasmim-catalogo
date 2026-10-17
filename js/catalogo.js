@@ -103,7 +103,7 @@ function cartaoHTML(p) {
     : PLACEHOLDER;
 
   const badgeDestaque = p.personalizado
-    ? `<span class="card-badge" style="background:var(--vinho)">personalizado</span>`
+    ? `<span class="card-badge card-badge--personalizado">personalizado</span>`
     : p.destaque ? `<span class="card-badge">destaque</span>` : "";
 
   const badgeNovo = p.novo

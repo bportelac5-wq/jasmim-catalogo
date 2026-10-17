@@ -7,14 +7,14 @@ Catálogo online da **Jasmim Flores Artesanais** (flores de chenille feitas à m
 - HTML + CSS + JavaScript puro (ES2020+, sem framework, sem bundler, sem `package.json`).
 - Dados em `produtos.json`, carregado com `fetch` quando a página abre.
 - Fotos em `img/produtos/`, logo em `img/logo.png` (também favicon e `og:image`, este com URL absoluta da Vercel). Até 2026-10-06 tudo ficava no Imgur.
-- Fontes do Google Fonts (Cormorant Garamond para títulos, Jost para o texto).
+- Fontes do Google Fonts: Fraunces (eixo `SOFT` no máximo) para títulos e preços, Jost para o texto.
 - Hospedagem estática: Vercel (URL canônica) e GitHub Pages.
 - Node só para o script de validação (`scripts/validar-produtos.mjs`). A página não usa Node.
 
 ## Estrutura
 
 ```
-index.html                        Marcação da página toda: header, banner, hero, diferenciais, grade, modal, rodapé
+index.html                        Marcação da página toda: header, hero (com o banner dentro), diferenciais, grade, modal, rodapé
 produtos.json                     Lista de produtos (é a "base de dados")
 js/catalogo.js                    Toda a lógica: carregar, filtrar, buscar, renderizar, modal, banner, WhatsApp
 css/style.css                     Todo o visual; tokens de cor e fonte em :root
