@@ -57,7 +57,7 @@ function mensagemGrade(html) {
 }
 
 /* ─── FILTRO + BUSCA ──────────────────────────────── */
-// Categoria = trecho do nome. Para criar uma nova: botão nas duas navs do index.html + uma linha aqui
+// Categoria = trecho do nome. Para criar uma nova: botão em .filtros no index.html + uma linha aqui
 const FILTROS = {
   rosa:          p => norm(p.nome).startsWith("rosa"),
   lirio:         p => norm(p.nome).includes("lirio"),
@@ -281,18 +281,17 @@ $("banner-next")?.addEventListener("click", () => { irBanner(bannerIndex + 1); i
 /* ─── FILTROS ─────────────────────────────────────── */
 function setFiltro(filtro) {
   filtroAtivo = filtro;
-  document.querySelectorAll(".nav-btn, .nav-btn-mobile").forEach(b => {
+  document.querySelectorAll(".filtro-btn").forEach(b => {
     b.classList.toggle("ativo", b.dataset.filtro === filtro);
+    b.setAttribute("aria-pressed", b.dataset.filtro === filtro);
   });
-  // Fecha o menu mobile depois de escolher
-  $("mobile-nav").classList.remove("aberta");
-  $("menu-toggle").setAttribute("aria-expanded", "false");
   renderizar();
-  // Rola até o catálogo
-  document.getElementById("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+  // Se já rolou para dentro da grade, volta ao começo dela para ver o resultado
+  const grade = $("grade-produtos");
+  if (grade.getBoundingClientRect().top < 0) grade.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-document.querySelectorAll(".nav-btn, .nav-btn-mobile").forEach(btn => {
+document.querySelectorAll(".filtro-btn").forEach(btn => {
   btn.addEventListener("click", () => setFiltro(btn.dataset.filtro));
 });
 
@@ -310,13 +309,6 @@ $("busca-fechar").addEventListener("click", () => {
 $("busca-input").addEventListener("input", e => {
   buscaAtiva = e.target.value;
   renderizar();
-});
-
-/* ─── MENU MOBILE ─────────────────────────────────── */
-$("menu-toggle").addEventListener("click", () => {
-  const nav = $("mobile-nav");
-  nav.classList.toggle("aberta");
-  $("menu-toggle").setAttribute("aria-expanded", nav.classList.contains("aberta"));
 });
 
 /* ─── HEADER SCROLL ───────────────────────────────── */

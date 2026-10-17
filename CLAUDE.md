@@ -74,7 +74,7 @@ Ao editar o JSON à mão, insira campos por texto, sem reserializar o arquivo in
   - `esc()` escapa texto que vai para `innerHTML`
   - `norm()` deixa minúsculo e sem acento
   - `fmt()` formata em BRL
-- Filtros: o objeto `FILTROS` mapeia categoria → predicado sobre `norm(p.nome)`. Não existe campo de categoria. Categoria nova = botão em `.header-nav` **e** em `.header-mobile-nav` no `index.html` + uma entrada em `FILTROS`.
+- Filtros: o objeto `FILTROS` mapeia categoria → predicado sobre `norm(p.nome)`. Não existe campo de categoria. Categoria nova = botão em `.filtros` (logo abaixo do título "Catálogo") no `index.html` + uma entrada em `FILTROS`. A barra de filtros é `sticky` embaixo do header; o header não tem menu.
 - A busca procura em nome e descrição, sem diferenciar acento nem maiúscula.
 - `renderizar()` refaz a grade com `innerHTML` e religa os listeners. **Todo dado do JSON interpolado em HTML passa por `esc()`.**
 - Fotos quebradas:

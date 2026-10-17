@@ -43,7 +43,7 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
 
 **Campos:**
 - `id` → número único. Use o próximo livre (hoje é o **14**). A ordem dos produtos no arquivo é a ordem em que aparecem no site.
-- `nome` → nome do produto. **Os filtros do menu leem o nome:** começa com "Rosa" → Rosas; tem "Lírio" → Lírios; também Gérbera, Girassol e Safira.
+- `nome` → nome do produto. **Os filtros do catálogo leem o nome:** começa com "Rosa" → Rosas; tem "Lírio" → Lírios; também Gérbera, Girassol e Safira.
 - `descricao` → descrição curta.
 - `preco` → número com ponto (ex.: `18.0`). Use `0` para "sob consulta".
 - `foto` → caminho da foto (veja abaixo).
