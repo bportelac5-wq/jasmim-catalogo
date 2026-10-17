@@ -20,7 +20,7 @@
     "preco": 18.0,
     "foto": "img/produtos/rosa-branca.jpg",
     "variacoes": {},
-    "destaque": true
+    "destaque": false
   },
   {
     "id": 2,
@@ -38,7 +38,7 @@
     "preco": 18.0,
     "foto": "img/produtos/lirio-branco.jpg",
     "variacoes": {},
-    "destaque": true
+    "destaque": false
   },
   {
     "id": 4,
@@ -56,7 +56,7 @@
     "preco": 18.0,
     "foto": "img/produtos/lirio-vermelho.jpg",
     "variacoes": {},
-    "destaque": true
+    "destaque": false
   },
   {
     "id": 7,
@@ -65,7 +65,7 @@
     "preco": 18.0,
     "foto": "img/produtos/lirio-azul-e-branco.jpg",
     "variacoes": {},
-    "destaque": true
+    "destaque": false
   },
   {
     "id": 9,
@@ -74,7 +74,7 @@
     "preco": 18.0,
     "foto": "img/produtos/lirio-rosa-claro.jpg",
     "variacoes": {},
-    "destaque": true
+    "destaque": false
   },
   {
     "id": 8,
@@ -83,7 +83,7 @@
     "preco": 15.0,
     "foto": "img/produtos/gerbera.jpg",
     "variacoes": {},
-    "destaque": true
+    "destaque": false
   },
   {
     "id": 11,
@@ -92,7 +92,7 @@
     "preco": 18.0,
     "foto": "img/produtos/flor-safira.jpg",
     "variacoes": {},
-    "destaque": true,
+    "destaque": false,
     "novo": true
   },
   {
@@ -112,7 +112,7 @@
     "preco": 36.0,
     "foto": "img/produtos/lirio-aranha.jpg",
     "variacoes": {},
-    "destaque": true,
+    "destaque": false,
     "novo": true
   },
   {
