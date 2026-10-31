@@ -90,7 +90,7 @@ Troque pelo número desejado (com 55 + DDD, sem espaços ou traços). Todos os b
 
 ## Como tirar os enfeites de Natal
 
-O site está com os enfeites ligados: guirlanda no banner, enfeites pendurados no topo e um raminho no título Catálogo.
+O site está com os enfeites ligados: guirlanda em todas as flores, estampa no fundo da página, enfeites pendurados no topo e um raminho no título Catálogo.
 
 Depois das festas, abra `index.html` e, na linha 3, apague só o `data-tema="natal"`:
 

@@ -579,24 +579,55 @@ body:has(.busca-bar.aberta) .filtros { top: calc(var(--header-h) + 3.75rem); }
     url("../img/natal/arvore.svg")  no-repeat calc(146 * var(--natal-u)) 0 / calc(68 * var(--natal-u)) calc(164 * var(--natal-u));
   pointer-events: none;
 }
-/* Guirlanda na borda do arco, com o laço de cetim do cartão. A proporção acompanha a largura do banner */
-[data-tema="natal"] .banner { position: relative; }
-[data-tema="natal"] .banner::before {
+/* Estampa de papel de presente no fundo da página */
+[data-tema="natal"] body {
+  background-image: url("../img/natal/fundo.svg");
+  background-size: 380px 380px;
+}
+/* Véu claro atrás do texto corrido, para a estampa não atrapalhar a leitura */
+[data-tema="natal"] .hero-sub,
+[data-tema="natal"] .card-body {
+  background: rgba(251,247,249,.85);
+  box-shadow: 0 0 14px 10px rgba(251,247,249,.85);
+}
+/* Translúcidos como o header: faixa lisa cortaria a estampa, e os cards ainda somem por baixo ao rolar */
+[data-tema="natal"] .filtros {
+  background: rgba(251,247,249,.9);
+  backdrop-filter: blur(10px);
+}
+/* Guirlanda na borda do arco de todas as flores, com o laço de cetim do cartão. Acompanha a largura da foto */
+[data-tema="natal"] .banner,
+[data-tema="natal"] .card,
+[data-tema="natal"] .modal-foto-wrap { position: relative; }
+[data-tema="natal"] .banner::before,
+[data-tema="natal"] .card::before,
+[data-tema="natal"] .modal-foto-wrap::before {
   content: "";
   position: absolute;
   top: 0; left: 50%;
   width: 117.65%;
-  aspect-ratio: 400 / 290;
-  transform: translate(-50%, -10.35%);
-  background: url("../img/natal/guirlanda.svg") no-repeat center / contain;
+  aspect-ratio: 4 / 3;
+  transform: translate(-50%, -15%);
+  background: url("../img/natal/guirlanda-topo.svg") no-repeat center / contain;
   pointer-events: none;
   z-index: 5;
 }
+/* Nos cards o laço muda de lugar, para não parecer carimbo */
+[data-tema="natal"] .card:nth-child(3n+2)::before { background-image: url("../img/natal/guirlanda-lado.svg"); }
+[data-tema="natal"] .card:nth-child(3n)::before {
+  background-image: url("../img/natal/guirlanda-lado.svg");
+  transform: translate(-50%, -15%) scaleX(-1);
+}
+/* No modal a moldura solta a guirlanda para fora, então a própria foto recorta o arco. A margem dá lugar ao laço */
+[data-tema="natal"] .modal-foto-wrap { overflow: visible; margin-top: 2.4rem; }
+[data-tema="natal"] .modal-foto,
+[data-tema="natal"] .modal-foto-wrap .card-foto-placeholder { border-radius: var(--arco); }
 [data-tema="natal"] .secao-titulo::after {
   content: "";
   display: inline-block;
-  width: 1.32em; height: .68em;
-  margin-left: .35em;
+  width: 1.9em; height: 1.02em;
+  margin-left: .3em;
+  vertical-align: -.12em;
   background: url("../img/natal/raminho.svg") no-repeat center / contain;
 }
 

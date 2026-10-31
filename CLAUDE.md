@@ -86,7 +86,7 @@ Ao editar o JSON à mão, insira campos por texto, sem reserializar o arquivo in
   - Fechado, fica `visibility: hidden` (não recebe Tab). Ao abrir, a visibilidade muda sem transição, para o `.focus()` no botão de fechar funcionar. Ao fechar, ela espera o fade.
   - O Tab fica preso dentro do modal, e ao fechar o foco volta para quem o abriu.
 - Se o `produtos.json` falhar, a grade mostra uma mensagem com link do WhatsApp e o banner some.
-- Tema de Natal: o atributo `data-tema="natal"` no `<html>` é o único interruptor. Os enfeites são pseudo-elementos com SVG de fundo (seção `NATAL` do CSS, mais o ajuste em `max-width: 768px`). Sem o atributo, nada aparece nem é baixado, e o HTML não muda. As cores dos SVGs ficam no gerador, porque SVG usado como imagem não lê `var(--...)`.
+- Tema de Natal: o atributo `data-tema="natal"` no `<html>` é o único interruptor. Os enfeites são pseudo-elementos com SVG de fundo (seção `NATAL` do CSS, mais o ajuste em `max-width: 768px`): guirlanda no banner, nos cards (o `nth-child` alterna o laço) e no modal, estampa no `body`. Sem o atributo, nada aparece nem é baixado, e o HTML não muda. As cores dos SVGs ficam no gerador, porque SVG usado como imagem não lê `var(--...)`.
 
 ## Padrões de código
 
