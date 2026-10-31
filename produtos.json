@@ -88,12 +88,22 @@
   },
   {
     "id": 8,
-    "nome": "Gérbera",
-    "descricao": "Gérbera artesanal feita à mão com haste de chenille. Delicada e cheia de personalidade. Acompanha embalagem exclusiva.",
-    "preco": 15.0,
+    "nome": "Gérbera Rosa",
+    "descricao": "Gérbera artesanal feita à mão com haste de chenille na cor rosa. Delicada e cheia de personalidade. Acompanha embalagem exclusiva.",
+    "preco": 16.0,
     "foto": "img/produtos/gerbera.jpg",
     "variacoes": {},
     "destaque": false
+  },
+  {
+    "id": 15,
+    "nome": "Gérbera Azul",
+    "descricao": "Gérbera artesanal feita à mão com haste de chenille na cor azul. Delicada e cheia de personalidade. Acompanha embalagem exclusiva.",
+    "preco": 16.0,
+    "foto": "img/produtos/gerbera-azul.jpg",
+    "variacoes": {},
+    "destaque": false,
+    "novo": true
   },
   {
     "id": 11,
@@ -121,6 +131,16 @@
     "descricao": "Lírio aranha artesanal feito à mão com haste de chenille. Peça rara e sofisticada. Acompanha embalagem exclusiva.",
     "preco": 36.0,
     "foto": "img/produtos/lirio-aranha.jpg",
+    "variacoes": {},
+    "destaque": false,
+    "novo": true
+  },
+  {
+    "id": 16,
+    "nome": "Mini Lírio Aranha",
+    "descricao": "Mini lírio aranha artesanal feito à mão com haste de chenille. Pequeno e sofisticado. Acompanha embalagem exclusiva.",
+    "preco": 20.0,
+    "foto": "img/produtos/mini-lirio-aranha.jpg",
     "variacoes": {},
     "destaque": false,
     "novo": true
