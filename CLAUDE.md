@@ -9,7 +9,7 @@ Catálogo online da **Jasmim Flores Artesanais** (flores de chenille feitas à m
 - Fotos em `img/produtos/`, logo em `img/logo.png` (também favicon e `og:image`, este com URL absoluta da Vercel). Até 2026-10-06 tudo ficava no Imgur.
 - Fontes do Google Fonts: Fraunces (eixo `SOFT` no máximo) para títulos e preços, Jost para o texto.
 - Hospedagem estática: Vercel (URL canônica) e GitHub Pages.
-- Node só para o script de validação (`scripts/validar-produtos.mjs`). A página não usa Node.
+- Node só para os scripts de `scripts/`. A página não usa Node.
 
 ## Estrutura
 
@@ -20,7 +20,9 @@ js/catalogo.js                    Toda a lógica: carregar, filtrar, buscar, ren
 css/style.css                     Todo o visual; tokens de cor e fonte em :root
 img/logo.png                      Logo, favicon e og:image
 img/produtos/                     Fotos dos produtos (nomes em minúsculas, sem acento, com hífen)
+img/natal/                        Enfeites do tema de Natal (SVGs gerados, não edite à mão)
 scripts/validar-produtos.mjs      Valida o produtos.json (sintaxe, campos, ids únicos, tipos, foto existe com o nome exato)
+scripts/gerar-enfeites-natal.mjs  Gera os SVGs de img/natal/; só precisa rodar para mudar um enfeite
 vercel.json                       Build da Vercel = rodar o validador; serve a raiz
 .github/workflows/validar-produtos.yml   Mesmo validador em todo push/PR
 README.md                         Guia para a dona da loja (não é dev). Mantenha a linguagem simples
@@ -84,6 +86,7 @@ Ao editar o JSON à mão, insira campos por texto, sem reserializar o arquivo in
   - Fechado, fica `visibility: hidden` (não recebe Tab). Ao abrir, a visibilidade muda sem transição, para o `.focus()` no botão de fechar funcionar. Ao fechar, ela espera o fade.
   - O Tab fica preso dentro do modal, e ao fechar o foco volta para quem o abriu.
 - Se o `produtos.json` falhar, a grade mostra uma mensagem com link do WhatsApp e o banner some.
+- Tema de Natal: o atributo `data-tema="natal"` no `<html>` é o único interruptor. Os enfeites são pseudo-elementos com SVG de fundo (seção `NATAL` do CSS, mais o ajuste em `max-width: 768px`). Sem o atributo, nada aparece nem é baixado, e o HTML não muda. As cores dos SVGs ficam no gerador, porque SVG usado como imagem não lê `var(--...)`.
 
 ## Padrões de código
 

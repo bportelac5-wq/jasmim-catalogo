@@ -12,6 +12,7 @@ jasmim-catalogo/
 ├── js/catalogo.js      ← lógica (não edite, só o número do WhatsApp)
 ├── img/
 │   ├── logo.png        ← logo (também é o ícone da aba e a imagem ao compartilhar)
+│   ├── natal/          ← enfeites de Natal (não edite)
 │   └── produtos/       ← AQUI ficam as fotos dos produtos
 ├── scripts/            ← conferência automática do produtos.json (não edite)
 ├── vercel.json         ← configuração da publicação (não edite)
@@ -84,6 +85,21 @@ Abra `js/catalogo.js` e na linha:
 whatsapp: "5519992006605",
 ```
 Troque pelo número desejado (com 55 + DDD, sem espaços ou traços). Todos os botões e o número que aparece no topo do site se atualizam sozinhos.
+
+---
+
+## Como tirar os enfeites de Natal
+
+O site está com os enfeites ligados: guirlanda no banner, enfeites pendurados no topo e um raminho no título Catálogo.
+
+Depois das festas, abra `index.html` e, na linha 3, apague só o `data-tema="natal"`:
+
+```html
+<html lang="pt-BR" data-tema="natal">   ← com enfeites
+<html lang="pt-BR">                     ← sem enfeites
+```
+
+Salve e o site volta ao normal sozinho. No próximo Natal, é só escrever `data-tema="natal"` de novo no mesmo lugar.
 
 ---
 

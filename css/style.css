@@ -558,6 +558,48 @@ body:has(.busca-bar.aberta) .filtros { top: calc(var(--header-h) + 3.75rem); }
 .topo-btn.visivel { opacity: 1; pointer-events: all; }
 .topo-btn:hover { background: var(--vinho-escuro); }
 
+/* ─── NATAL ───────────────────────────────────────────────────────────── */
+/* Liga com data-tema="natal" no <html>. Os enfeites são só CSS: sem o atributo, nada aparece nem carrega */
+[data-tema="natal"] {
+  /* Tamanho dos pendentes: encolhe junto com a tela para não encostar no título */
+  --natal-u: clamp(.68px, .1vw, 1px);
+}
+[data-tema="natal"] .hero { position: relative; }
+/* Pendentes: no vazio entre o título e o arco, saindo de baixo do header */
+[data-tema="natal"] .hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: calc(1.4rem + clamp(250px, 30vw, 340px) + clamp(1rem, 3vw, 2.2rem));
+  width: calc(214 * var(--natal-u));
+  height: calc(212 * var(--natal-u));
+  background:
+    url("../img/natal/bola.svg")    no-repeat 0 0 / calc(68 * var(--natal-u)) calc(124 * var(--natal-u)),
+    url("../img/natal/estrela.svg") no-repeat calc(70 * var(--natal-u)) 0 / calc(72 * var(--natal-u)) calc(212 * var(--natal-u)),
+    url("../img/natal/arvore.svg")  no-repeat calc(146 * var(--natal-u)) 0 / calc(68 * var(--natal-u)) calc(164 * var(--natal-u));
+  pointer-events: none;
+}
+/* Guirlanda na borda do arco, com o laço de cetim do cartão. A proporção acompanha a largura do banner */
+[data-tema="natal"] .banner { position: relative; }
+[data-tema="natal"] .banner::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  width: 117.65%;
+  aspect-ratio: 400 / 290;
+  transform: translate(-50%, -10.35%);
+  background: url("../img/natal/guirlanda.svg") no-repeat center / contain;
+  pointer-events: none;
+  z-index: 5;
+}
+[data-tema="natal"] .secao-titulo::after {
+  content: "";
+  display: inline-block;
+  width: 1.32em; height: .68em;
+  margin-left: .35em;
+  background: url("../img/natal/raminho.svg") no-repeat center / contain;
+}
+
 /* ─── RESPONSIVO ──────────────────────────────────────────────────────── */
 @media (min-width: 900px) {
   .header-whats span { display: inline; }
@@ -566,6 +608,16 @@ body:has(.busca-bar.aberta) .filtros { top: calc(var(--header-h) + 3.75rem); }
   .hero { grid-template-columns: 1fr; justify-items: center; text-align: center; }
   .hero-titulo { margin-bottom: 1.1rem; }
   .hero-sub { margin-left: auto; margin-right: auto; margin-bottom: 1.6rem; }
+  /* Natal: com o título centralizado, só a estrela e a bola, uma de cada lado dele */
+  [data-tema="natal"] { --natal-u: clamp(.5px, .156vw, .61px); }
+  [data-tema="natal"] .hero::before {
+    left: 0; right: 0;
+    width: auto;
+    height: calc(142 * var(--natal-u));
+    background:
+      url("../img/natal/estrela.svg") no-repeat left clamp(.35rem, calc(8vw - 20px), 2.6rem) top calc(-70 * var(--natal-u)) / calc(72 * var(--natal-u)) calc(212 * var(--natal-u)),
+      url("../img/natal/bola.svg")    no-repeat right clamp(.35rem, calc(8vw - 20px), 2.6rem) top 0 / calc(68 * var(--natal-u)) calc(124 * var(--natal-u));
+  }
 }
 @media (max-width: 580px) {
   .modal-box { grid-template-columns: 1fr; }
