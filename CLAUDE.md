@@ -19,6 +19,7 @@ produtos.json                     Lista de produtos (é a "base de dados")
 js/catalogo.js                    Toda a lógica: carregar, filtrar, buscar, renderizar, modal, banner, WhatsApp
 css/style.css                     Todo o visual; tokens de cor e fonte em :root
 img/logo.png                      Logo, favicon e og:image
+img/qrcode-catalogo.png|.svg      QR Code do catálogo para material impresso; fundo na cor do papel do cartão; a página não usa
 img/produtos/                     Fotos dos produtos (nomes em minúsculas, sem acento, com hífen)
 img/natal/                        Enfeites do tema de Natal (SVGs gerados, não edite à mão)
 scripts/validar-produtos.mjs      Valida o produtos.json (sintaxe, campos, ids únicos, tipos, foto existe com o nome exato)
@@ -103,6 +104,7 @@ Ao editar o JSON à mão, insira campos por texto, sem reserializar o arquivo in
 - As fotos têm o tamanho original do Imgur (1200×1600, ~200–560 KB cada, ~4,7 MB no total). Os cards usam `loading="lazy"`. Se o peso virar problema, gere versões menores.
 - Se voltar a usar imagem externa: o Imgur responde 403 para referer `localhost`. O `<meta name="referrer" content="no-referrer">` do `index.html` contorna isso.
 - O selo `novo` é manual no JSON; alguém precisa tirar quando deixar de ser novidade.
+- O QR Code impresso grava `https://jasmim-catalogo.vercel.app` direto, sem encurtador. Se esse endereço mudar, todo material já impresso para de funcionar.
 
 ## Ao mexer aqui
 

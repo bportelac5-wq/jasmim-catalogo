@@ -12,6 +12,8 @@ jasmim-catalogo/
 ├── js/catalogo.js      ← lógica (não edite, só o número do WhatsApp)
 ├── img/
 │   ├── logo.png        ← logo (também é o ícone da aba e a imagem ao compartilhar)
+│   ├── qrcode-catalogo.png  ← QR Code do catálogo para cartões e impressos
+│   ├── qrcode-catalogo.svg  ← o mesmo QR Code, para gráfica
 │   ├── natal/          ← enfeites de Natal (não edite)
 │   └── produtos/       ← AQUI ficam as fotos dos produtos
 ├── scripts/            ← conferência automática do produtos.json (não edite)
