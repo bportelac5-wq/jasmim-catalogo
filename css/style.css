@@ -334,6 +334,15 @@ body:has(.busca-bar.aberta) .filtros { top: calc(var(--header-h) + 3.75rem); }
 }
 .filtro-btn:hover { color: var(--vinho); border-color: var(--vinho); }
 .filtro-btn.ativo { background: var(--vinho); color: var(--branco); border-color: var(--vinho); }
+/* Especiais de Natal: guirlanda antes do nome. É da categoria, não do tema: aparece mesmo sem data-tema="natal" */
+.filtro-btn--natal { display: inline-flex; align-items: center; gap: .35em; padding-left: .7rem; }
+.filtro-btn--natal::before {
+  content: "";
+  flex: none;
+  width: 1.5em; height: 1.5em;
+  margin: -.3em 0;   /* não deixa o botão mais alto que os outros */
+  background: url("../img/natal/guirlanda-icone.svg") no-repeat center / contain;
+}
 
 .grade {
   scroll-margin-top: 5rem;

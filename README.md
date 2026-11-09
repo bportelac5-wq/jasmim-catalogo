@@ -31,7 +31,7 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
 
 ```json
 {
-  "id": 14,
+  "id": 23,
   "nome": "Nome do produto",
   "descricao": "Descrição curta do produto aqui.",
   "preco": 18.0,
@@ -45,14 +45,15 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
 ```
 
 **Campos:**
-- `id` → número único. Use o próximo livre (hoje é o **14**). A ordem dos produtos no arquivo é a ordem em que aparecem no site.
-- `nome` → nome do produto. **Os filtros do catálogo leem o nome:** começa com "Rosa" → Rosas; tem "Lírio" → Lírios; também Gérbera, Girassol e Safira.
+- `id` → número único. Use o próximo livre (hoje é o **23**). A ordem dos produtos no arquivo é a ordem em que aparecem no site.
+- `nome` → nome do produto. **Os filtros do catálogo leem o nome:** começa com "Rosa" → Rosas; tem "Lírio" → Lírios; também Gérbera, Girassol e Safira. A categoria Especiais de Natal é a exceção: ela usa o campo `natal` (veja abaixo).
 - `descricao` → descrição curta.
 - `preco` → número com ponto (ex.: `18.0`). Use `0` para "sob consulta".
 - `foto` → caminho da foto (veja abaixo).
 - `variacoes` → opções que a cliente escolhe (cor, tamanho...). Use `{}` se não tiver.
 - `destaque` → `true` aparece no banner do topo e com o selo "destaque"; `false` não.
 - `novo` → `true` mostra o selo "novo". Tire (ou mude para `false`) quando deixar de ser novidade.
+- `natal` → `true` coloca o produto na categoria "Especiais de Natal". Nos outros produtos, não precisa escrever.
 
 `true` e `false` vão **sem aspas**. Números também.
 
@@ -102,6 +103,8 @@ Depois das festas, abra `index.html` e, na linha 3, apague só o `data-tema="nat
 ```
 
 Salve e o site volta ao normal sozinho. No próximo Natal, é só escrever `data-tema="natal"` de novo no mesmo lugar.
+
+**E os produtos de Natal?** Os enfeites e a categoria "Especiais de Natal" são coisas separadas: tirar os enfeites não tira os produtos. Quando quiser parar de vender os itens de Natal, apague do `produtos.json` os produtos que têm `"natal": true`. Sem nenhum deles, o botão "Especiais de Natal" some do site sozinho. Guarde uma cópia dos blocos para colar de volta no ano que vem.
 
 ---
 

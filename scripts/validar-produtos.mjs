@@ -70,7 +70,7 @@ produtos.forEach((p, i) => {
     }
   }
 
-  for (const campo of ["destaque", "novo", "personalizado"]) {
+  for (const campo of ["destaque", "novo", "personalizado", "natal"]) {
     if (p[campo] !== undefined && typeof p[campo] !== "boolean") erro(`"${campo}" precisa ser true ou false, sem aspas`);
   }
 });

@@ -23,7 +23,7 @@ img/qrcode-catalogo.png|.svg      QR Code do catálogo para material impresso; f
 img/produtos/                     Fotos dos produtos (nomes em minúsculas, sem acento, com hífen)
 img/natal/                        Enfeites do tema de Natal (SVGs gerados, não edite à mão)
 scripts/validar-produtos.mjs      Valida o produtos.json (sintaxe, campos, ids únicos, tipos, foto existe com o nome exato)
-scripts/gerar-enfeites-natal.mjs  Gera os SVGs de img/natal/; só precisa rodar para mudar um enfeite
+scripts/gerar-enfeites-natal.mjs  Gera os SVGs de img/natal/; só precisa rodar para mudar um enfeite. O sorteio tem semente fixa: enfeite novo vai no fim do script, senão os de cima mudam
 vercel.json                       Build da Vercel = rodar o validador; serve a raiz
 .github/workflows/validar-produtos.yml   Mesmo validador em todo push/PR
 README.md                         Guia para a dona da loja (não é dev). Mantenha a linguagem simples
@@ -61,7 +61,8 @@ Não há testes automatizados de UI. Para testar sem a extensão do Chrome, dá 
   "variacoes": { "Cor": ["Vermelha", "Branca"] },   // {} se não tiver
   "destaque": true,               // selo "destaque" + entra no banner
   "novo": true,                   // opcional: selo "novo"
-  "personalizado": true           // opcional: selo "personalizado", preço sob consulta, fora do banner, texto de encomenda no WhatsApp
+  "personalizado": true,          // opcional: selo "personalizado", preço sob consulta, fora do banner, texto de encomenda no WhatsApp
+  "natal": true                   // opcional: entra na categoria Especiais de Natal
 }
 ```
 
@@ -77,7 +78,8 @@ Ao editar o JSON à mão, insira campos por texto, sem reserializar o arquivo in
   - `esc()` escapa texto que vai para `innerHTML`
   - `norm()` deixa minúsculo e sem acento
   - `fmt()` formata em BRL
-- Filtros: o objeto `FILTROS` mapeia categoria → predicado sobre `norm(p.nome)`. Não existe campo de categoria. Categoria nova = botão em `.filtros` (logo abaixo do título "Catálogo") no `index.html` + uma entrada em `FILTROS`. A barra de filtros é `sticky` embaixo do header; o header não tem menu.
+- Filtros: o objeto `FILTROS` mapeia categoria → predicado, quase sempre sobre `norm(p.nome)`. Não existe campo de categoria; as exceções são os booleanos `personalizado` (Encomenda) e `natal` (Especiais de Natal, cujos itens não têm um trecho de nome em comum). Categoria nova = botão em `.filtros` (logo abaixo do título "Catálogo") no `index.html` + uma entrada em `FILTROS`. `esconderFiltrosVazios()` esconde, ao carregar, o botão de categoria sem produto: é assim que Especiais de Natal some depois das festas. A barra de filtros é `sticky` embaixo do header; o header não tem menu.
+- O botão Especiais de Natal (`.filtro-btn--natal`) tem a guirlanda `img/natal/guirlanda-icone.svg` num `::before`. Ela é da categoria, não do tema: aparece com ou sem `data-tema="natal"`.
 - A busca procura em nome e descrição, sem diferenciar acento nem maiúscula.
 - `renderizar()` refaz a grade com `innerHTML` e religa os listeners. **Todo dado do JSON interpolado em HTML passa por `esc()`.**
 - Fotos quebradas:

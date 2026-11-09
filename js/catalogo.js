@@ -43,6 +43,7 @@ async function carregarProdutos() {
     const res = await fetch("produtos.json", { cache: "no-cache" });
     if (!res.ok) throw new Error(res.status);
     produtos = await res.json();
+    esconderFiltrosVazios();
     iniciarBanner();
     renderizar();
   } catch {
@@ -57,8 +58,9 @@ function mensagemGrade(html) {
 }
 
 /* ─── FILTRO + BUSCA ──────────────────────────────── */
-// Categoria = trecho do nome. Para criar uma nova: botão em .filtros no index.html + uma linha aqui
+// Categoria = trecho do nome (ou um campo true, como natal). Para criar uma nova: botão em .filtros no index.html + uma linha aqui
 const FILTROS = {
+  natal:         p => p.natal,
   rosa:          p => norm(p.nome).startsWith("rosa"),
   lirio:         p => norm(p.nome).includes("lirio"),
   gerbera:       p => norm(p.nome).includes("gerbera"),
@@ -76,6 +78,14 @@ function filtrados() {
   if (q) lista = lista.filter(p => norm(p.nome).includes(q) || norm(p.descricao).includes(q));
 
   return lista;
+}
+
+// Categoria sem produto some da barra: tirar os itens de Natal do JSON já tira o botão
+function esconderFiltrosVazios() {
+  document.querySelectorAll(".filtro-btn").forEach(b => {
+    const f = FILTROS[b.dataset.filtro];
+    if (f) b.hidden = !produtos.some(f);
+  });
 }
 
 /* ─── RENDERIZAR GRADE ────────────────────────────── */

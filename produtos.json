@@ -87,6 +87,16 @@
     "novo": true
   },
   {
+    "id": 17,
+    "nome": "Lírio Rosa Premium",
+    "descricao": "Lírio artesanal feito à mão com haste de chenille, pétalas rosa contornadas de branco e estames marrons. Acompanha embalagem exclusiva.",
+    "preco": 20.0,
+    "foto": "img/produtos/lirio-rosa-premium.jpg",
+    "variacoes": {},
+    "destaque": false,
+    "novo": true
+  },
+  {
     "id": 8,
     "nome": "Gérbera Rosa",
     "descricao": "Gérbera artesanal feita à mão com haste de chenille na cor rosa. Delicada e cheia de personalidade. Acompanha embalagem exclusiva.",
@@ -144,6 +154,71 @@
     "variacoes": {},
     "destaque": false,
     "novo": true
+  },
+  {
+    "id": 18,
+    "nome": "Mini Árvore de Natal",
+    "descricao": "Mini árvore de Natal feita à mão em chenille, com estrela no topo, laço vermelho, bengalinhas e pompons. Enfeita a mesa da ceia ou um cantinho da casa.",
+    "preco": 36.0,
+    "foto": "img/produtos/mini-arvore-de-natal.jpg",
+    "variacoes": {
+      "Estrela": [
+        "Prata",
+        "Dourada"
+      ]
+    },
+    "destaque": false,
+    "novo": true,
+    "natal": true
+  },
+  {
+    "id": 19,
+    "nome": "Mini Guirlanda",
+    "descricao": "Mini guirlanda de chenille em duas cores, feita à mão, com laço de cetim e alça para pendurar na árvore de Natal. Valor por unidade.",
+    "preco": 5.0,
+    "foto": "img/produtos/mini-guirlanda.jpg",
+    "variacoes": {
+      "Cores": [
+        "Vermelho e branco",
+        "Vermelho e verde"
+      ]
+    },
+    "destaque": false,
+    "novo": true,
+    "natal": true
+  },
+  {
+    "id": 20,
+    "nome": "Flor de Natal Dourada",
+    "descricao": "Flor de Natal artesanal feita à mão com haste de chenille, pétalas vermelhas contornadas de dourado e folha verde.",
+    "preco": 20.0,
+    "foto": "img/produtos/flor-de-natal-dourada.jpg",
+    "variacoes": {},
+    "destaque": false,
+    "novo": true,
+    "natal": true
+  },
+  {
+    "id": 21,
+    "nome": "Flor de Natal Prata",
+    "descricao": "Flor de Natal artesanal feita à mão com haste de chenille, pétalas vermelhas contornadas de prata e folha verde.",
+    "preco": 20.0,
+    "foto": "img/produtos/flor-de-natal-prata.jpg",
+    "variacoes": {},
+    "destaque": false,
+    "novo": true,
+    "natal": true
+  },
+  {
+    "id": 22,
+    "nome": "Porta-Guardanapo",
+    "descricao": "Porta-guardanapo em forma de flor vermelha, feito à mão em chenille. Deixa a mesa da ceia de Natal mais charmosa.",
+    "preco": 5.0,
+    "foto": "img/produtos/porta-guardanapo.jpg",
+    "variacoes": {},
+    "destaque": false,
+    "novo": true,
+    "natal": true
   },
   {
     "id": 6,

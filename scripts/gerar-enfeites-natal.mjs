@@ -223,3 +223,12 @@ const fio = (cx, y) => `<path d="M${cx} 0V${y}" stroke="${FIO}" stroke-width="1"
     floco(284, 214, 16, 15) + flor(84, 208, 14, -14) + brilho(196, 262, 9) + ramo(312, 322, 26) + floco(110, 322, 22, 10) +
     pontos.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2" fill="${ROSA}"/>`).join(""));
 }
+
+/* ─── GUIRLANDA ÍCONE ─── ao lado do nome da categoria Especiais de Natal. Fica no fim: não muda o sorteio dos de cima */
+{
+  const cx = 24, cy = 26, R = 13.5, p = [];
+  for (let g = -80; g <= 300; g += 10) p.push([cx + R * Math.cos(rad(g)), cy + R * Math.sin(rad(g))]);
+  svg("guirlanda-icone.svg", 48, 48, GRADIENTES + chenille(p, { raio: 4.4, cor: VERDE, passo: .8, incl: .2, grossura: .9 }) +
+    baga(cx - 4, cy + R - .5, 3) + baga(cx + 3.6, cy + R + .5, 2.8) + baga(cx - .2, cy + R - 4.6, 2.6) +
+    baga(cx - R + .5, cy + 1, 2.4) + baga(cx + R - .5, cy + 1, 2.4) + laco(cx, cy - R, 0, .27));
+}
