@@ -229,5 +229,25 @@
     "variacoes": {},
     "destaque": true,
     "personalizado": true
+  },
+  {
+    "id": 23,
+    "nome": "Encomenda Personalizada",
+    "descricao": "Encomendar com pelo menos 1 semana de antecedência. Escolha tipo, cor e estilo. Feita exclusivamente para você com muito carinho.",
+    "preco": 0,
+    "foto": "img/produtos/encomenda-personalizada-rosa.jpg",
+    "variacoes": {},
+    "destaque": true,
+    "personalizado": true
+  },
+  {
+    "id": 24,
+    "nome": "Kit One Piece",
+    "descricao": "Kit inspirado em One Piece, feito à mão em chenille: a fruta roxa em espiral com uma flor amarela de faixa vermelha, como o chapéu de palha do Luffy. Encomendar com pelo menos 1 semana de antecedência.",
+    "preco": 0,
+    "foto": "img/produtos/kit-one-piece.jpg",
+    "variacoes": {},
+    "destaque": false,
+    "personalizado": true
   }
 ]

@@ -31,7 +31,7 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
 
 ```json
 {
-  "id": 23,
+  "id": 25,
   "nome": "Nome do produto",
   "descricao": "Descrição curta do produto aqui.",
   "preco": 18.0,
@@ -45,7 +45,7 @@ Copie este bloco e cole antes do último `]`. Coloque uma vírgula depois do `}`
 ```
 
 **Campos:**
-- `id` → número único. Use o próximo livre (hoje é o **23**). A ordem dos produtos no arquivo é a ordem em que aparecem no site.
+- `id` → número único. Use o próximo livre (hoje é o **25**). A ordem dos produtos no arquivo é a ordem em que aparecem no site.
 - `nome` → nome do produto. **Os filtros do catálogo leem o nome:** começa com "Rosa" → Rosas; tem "Lírio" → Lírios; também Gérbera, Girassol e Safira. A categoria Especiais de Natal é a exceção: ela usa o campo `natal` (veja abaixo).
 - `descricao` → descrição curta.
 - `preco` → número com ponto (ex.: `18.0`). Use `0` para "sob consulta".
