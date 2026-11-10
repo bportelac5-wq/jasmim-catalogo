@@ -334,14 +334,23 @@ body:has(.busca-bar.aberta) .filtros { top: calc(var(--header-h) + 3.75rem); }
 }
 .filtro-btn:hover { color: var(--vinho); border-color: var(--vinho); }
 .filtro-btn.ativo { background: var(--vinho); color: var(--branco); border-color: var(--vinho); }
-/* Especiais de Natal: guirlanda antes do nome. É da categoria, não do tema: aparece mesmo sem data-tema="natal" */
-.filtro-btn--natal { display: inline-flex; align-items: center; gap: .35em; padding-left: .7rem; }
+/* Especiais de Natal: guirlanda com pisca-pisca em volta do botão, no lugar da borda.
+   É da categoria, não do tema: aparece mesmo sem data-tema="natal".
+   Medidas em em: o SVG é desenhado nessa proporção e serve no desktop e no celular */
+.filtros .filtro-btn--natal {
+  position: relative;
+  padding: .48em 1.15em .48em 1.75em;
+  margin: 0 .55em;
+  border-color: transparent;
+}
 .filtro-btn--natal::before {
   content: "";
-  flex: none;
-  width: 1.5em; height: 1.5em;
-  margin: -.3em 0;   /* não deixa o botão mais alto que os outros */
-  background: url("../img/natal/guirlanda-icone.svg") no-repeat center / contain;
+  position: absolute;
+  inset: -.6em;
+  background:
+    url("../img/natal/guirlanda-botao-luzes.svg") no-repeat center / 100% 100%,
+    url("../img/natal/guirlanda-botao.svg")       no-repeat center / 100% 100%;
+  pointer-events: none;
 }
 
 .grade {

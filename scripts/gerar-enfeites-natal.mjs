@@ -224,11 +224,59 @@ const fio = (cx, y) => `<path d="M${cx} 0V${y}" stroke="${FIO}" stroke-width="1"
     pontos.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2" fill="${ROSA}"/>`).join(""));
 }
 
-/* ─── GUIRLANDA ÍCONE ─── ao lado do nome da categoria Especiais de Natal. Fica no fim: não muda o sorteio dos de cima */
+/* ─── GUIRLANDA DO BOTÃO ─── em volta do botão Especiais de Natal, com pisca-pisca. Fica no fim: não muda o sorteio dos de cima.
+   Medidas do botão com fonte de 15px (162,7×40,4) mais a folga de .6em do ::before; o CSS estica o SVG na mesma proporção */
 {
-  const cx = 24, cy = 26, R = 13.5, p = [];
-  for (let g = -80; g <= 300; g += 10) p.push([cx + R * Math.cos(rad(g)), cy + R * Math.sin(rad(g))]);
-  svg("guirlanda-icone.svg", 48, 48, GRADIENTES + chenille(p, { raio: 4.4, cor: VERDE, passo: .8, incl: .2, grossura: .9 }) +
-    baga(cx - 4, cy + R - .5, 3) + baga(cx + 3.6, cy + R + .5, 2.8) + baga(cx - .2, cy + R - 4.6, 2.6) +
-    baga(cx - R + .5, cy + 1, 2.4) + baga(cx + R - .5, cy + 1, 2.4) + laco(cx, cy - R, 0, .27));
+  const F = 9, BW = 162.7, BH = 40.4, W = BW + 2 * F, H = BH + 2 * F;
+  // A guirlanda corre um pouco por fora da borda, para as agulhas não encostarem no texto
+  const r = BH / 2 + 3, x0 = F + BH / 2, x1 = F + BW - BH / 2, yc = F + BH / 2;
+  const reto = x1 - x0, L = 2 * reto + 2 * Math.PI * r;
+  // Ponto (afastado d do traçado) e direção, em sentido horário, a s do começo do reto de cima
+  const ponto = (s, d = 0) => {
+    s = ((s % L) + L) % L;
+    const R = r + d;
+    if (s < reto) return [x0 + s, yc - R, 0];
+    s -= reto;
+    if (s < Math.PI * r) { const a = -Math.PI / 2 + s / r; return [x1 + R * Math.cos(a), yc + R * Math.sin(a), a + Math.PI / 2]; }
+    s -= Math.PI * r;
+    if (s < reto) return [x1 - s, yc + R, Math.PI];
+    s -= reto;
+    const a = Math.PI / 2 + s / r;
+    return [x0 + R * Math.cos(a), yc + R * Math.sin(a), a + Math.PI / 2];
+  };
+
+  const pts = [];
+  for (let s = 0; s < L; s += 2) pts.push(ponto(s));
+  const miolo = `<path d="M${pts.map(([x, y]) => `${f(x)} ${f(y)}`).join("L")}Z" fill="none" stroke="#123F2A" stroke-width="2.4"/>`;
+
+  // Galhos curtos que abrem mais para fora (ângulo menor = lado de fora no sentido horário)
+  const v = novoPinheiro();
+  for (const [passo, comp, tom, agulha] of [[5, 9.5, 0, 4.4], [6, 8, 1, 4], [8, 6.5, 2, 3.5]]) {
+    for (let s = 0; s < L; s += passo) {
+      const [x, y, ang] = ponto(s + rand() * 2, rand() * 2 - .6);
+      galho(v, x, y, ang - rad(rand() < .75 ? 3 + rand() * 12 : -(2 + rand() * 6)), comp * (.85 + rand() * .3), { tom, agulha, passo: 2.3, curva: rad(-8) });
+    }
+  }
+
+  // Laço de cetim no ombro esquerdo, no espaço antes do texto; as luzes não passam por baixo dele
+  const sLaco = 2 * reto + Math.PI * r + rad(135) * r;
+  const [lx, ly] = ponto(sLaco);
+
+  // Pisca-pisca: três cores, cada lâmpada num dos três tempos, apagando devagar
+  const CORES = [["#FFCF70", "#FFF0C8"], ["#E5485C", "#FFB3BC"], ["#FFF3D6", "#FFFFFF"]];
+  const n = Math.round(L / 17);
+  let luzes = "";
+  for (let i = 0; i < n; i++) {
+    const s = i * L / n + 6;
+    if (Math.abs(((s - sLaco + L / 2) % L + L) % L - L / 2) < 15) continue;
+    const [x, y] = ponto(s, i % 2 ? 1.8 : -.6);
+    const c = i % 3, t = Math.floor(rand() * 3);
+    luzes += `<g class="p p${t}"><circle cx="${f(x)}" cy="${f(y)}" r="5.2" fill="url(#luz${c})"/><circle cx="${f(x)}" cy="${f(y)}" r="2.1" fill="${CORES[c][0]}"/><circle cx="${f(x - .6)}" cy="${f(y - .65)}" r=".75" fill="${CORES[c][1]}"/></g>`;
+  }
+  const brilho = `<defs>${CORES.map(([c], i) => `<radialGradient id="luz${i}"><stop offset="0" stop-color="${c}" stop-opacity=".95"/><stop offset=".4" stop-color="${c}" stop-opacity=".45"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`).join("")}</defs>`;
+  const pisca = `<style>.p{animation:p 2.6s ease-in-out infinite}.p1{animation-delay:-.87s}.p2{animation-delay:-1.73s}@keyframes p{0%,100%{opacity:1}50%{opacity:.22}}@media (prefers-reduced-motion:reduce){.p{animation:none}}</style>`;
+
+  // Dois arquivos: a animação faz o navegador redesenhar a imagem inteira a cada quadro, então só as luzes piscam
+  svg("guirlanda-botao.svg", f(W), f(H), GRADIENTES + miolo + tracar(v) + laco(lx, ly, -20, .24));
+  svg("guirlanda-botao-luzes.svg", f(W), f(H), brilho + luzes, pisca);
 }

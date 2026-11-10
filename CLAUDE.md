@@ -79,7 +79,7 @@ Ao editar o JSON à mão, insira campos por texto, sem reserializar o arquivo in
   - `norm()` deixa minúsculo e sem acento
   - `fmt()` formata em BRL
 - Filtros: o objeto `FILTROS` mapeia categoria → predicado, quase sempre sobre `norm(p.nome)`. Não existe campo de categoria; as exceções são os booleanos `personalizado` (Encomenda) e `natal` (Especiais de Natal, cujos itens não têm um trecho de nome em comum). Categoria nova = botão em `.filtros` (logo abaixo do título "Catálogo") no `index.html` + uma entrada em `FILTROS`. `esconderFiltrosVazios()` esconde, ao carregar, o botão de categoria sem produto: é assim que Especiais de Natal some depois das festas. A barra de filtros é `sticky` embaixo do header; o header não tem menu.
-- O botão Especiais de Natal (`.filtro-btn--natal`) tem a guirlanda `img/natal/guirlanda-icone.svg` num `::before`. Ela é da categoria, não do tema: aparece com ou sem `data-tema="natal"`.
+- O botão Especiais de Natal (`.filtro-btn--natal`) tem uma guirlanda em volta, no lugar da borda, num `::before` com duas camadas: `img/natal/guirlanda-botao.svg` (pinheiro e laço, parada) e `guirlanda-botao-luzes.svg` (pisca-pisca). Ficam separadas porque SVG animado é redesenhado inteiro a cada quadro: só as luzes, ~3% de CPU no celular. O SVG é desenhado na proporção do botão (162,7×40,4 com fonte de 15px); por isso o padding desse botão é em `em`. Mudou o texto ou o padding? Meça o botão e ajuste `BW`/`BH` no gerador. É da categoria, não do tema: aparece com ou sem `data-tema="natal"`.
 - A busca procura em nome e descrição, sem diferenciar acento nem maiúscula.
 - `renderizar()` refaz a grade com `innerHTML` e religa os listeners. **Todo dado do JSON interpolado em HTML passa por `esc()`.**
 - Fotos quebradas:
